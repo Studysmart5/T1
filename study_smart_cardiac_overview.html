@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Study Smart — Cardiac Electrophysiology (Lectures 1–2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#faf7fb;--card:#fff;--ink:#241a2e;--mut:#6b6275;--p:#5b2a86;--s:#d6336c;--ln:#e4dcea;--ok:#1f8a4c;--bad:#c0392b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:28px 18px 8px;max-width:960px;margin:auto}
+h1{font:700 clamp(2rem,6vw,3.2rem)/1 Georgia,serif;margin:0;color:var(--p);letter-spacing:-.02em}
+header p{margin:6px 0 0;color:var(--mut)}
+nav{display:flex;gap:6px;overflow-x:auto;max-width:960px;margin:14px auto;padding:0 18px}
+nav button{flex:none;border:1.5px solid var(--ln);background:var(--card);color:var(--ink);padding:9px 15px;border-radius:99px;font:600 .9rem inherit;cursor:pointer}
+nav button[aria-selected=true]{background:var(--p);border-color:var(--p);color:#fff}
+button:focus-visible,input:focus-visible{outline:3px solid var(--s);outline-offset:2px}
+main{max-width:960px;margin:auto;padding:0 18px 30px}
+section{display:none}section.on{display:block}
+h2{font:700 1.5rem Georgia,serif;margin:8px 0 12px}
+.card{background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:16px;margin-bottom:12px}
+.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.grid .card{margin:0;border-left:5px solid var(--s)}
+.grid b{color:var(--p)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{border:1.5px solid var(--ln);background:var(--card);color:var(--ink);border-radius:99px;padding:5px 12px;cursor:pointer;font:.85rem inherit}
+.chip.on{background:var(--s);border-color:var(--s);color:#fff}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+.sc{overflow-x:auto}
+td,th{padding:9px 8px;border-bottom:1px solid var(--ln);text-align:left;vertical-align:top}
+th{color:var(--p)}
+td:first-child{font-weight:700;white-space:nowrap}
+.tree{display:flex;flex-direction:column;align-items:center;gap:10px}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.node{border:2px solid var(--p);background:var(--card);color:var(--ink);padding:9px 14px;border-radius:10px;cursor:pointer;font:600 .95rem inherit}
+.node.on{background:var(--p);color:#fff}
+.note{background:var(--bg);border:1px dashed var(--p);border-radius:10px;padding:12px;margin-top:10px;min-height:48px}
+.tl{display:flex;overflow-x:auto;gap:0;padding:10px 0;border-top:3px solid var(--p);margin-top:10px}
+.tl button{flex:1 0 130px;background:none;border:0;color:var(--ink);cursor:pointer;padding:12px 6px 0;position:relative;font:.85rem inherit}
+.tl button:before{content:"";position:absolute;top:-17px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--s);border:3px solid var(--bg)}
+.tl button.on{font-weight:700;color:var(--p)}
+.steps{display:flex;gap:6px;flex-wrap:wrap}
+.steps button{flex:1 0 130px;padding:12px;border:2px solid var(--ln);background:var(--card);color:var(--ink);cursor:pointer;border-radius:10px;font:inherit}
+.steps button.on{border-color:var(--s);background:var(--s);color:#fff}
+.map{display:grid;grid-template-columns:240px 1fr;gap:14px}
+.list{max-height:60vh;overflow:auto;display:flex;flex-direction:column;gap:3px}
+.list h4{margin:10px 0 2px;color:var(--p);font-size:.85rem}
+.list button{text-align:left;border:0;background:none;color:var(--ink);padding:6px 8px;border-radius:7px;cursor:pointer;font:.92rem inherit}
+.list button.on{background:var(--p);color:#fff}
+.view{position:sticky;top:8px;align-self:start;min-height:140px}
+.view h3{margin:0 0 6px;color:var(--s);font:700 1.3rem Georgia,serif}
+@media(max-width:640px){.map{grid-template-columns:1fr}.view{order:-1}.list{max-height:34vh}}
+.fc{perspective:900px;height:220px;cursor:pointer;margin:10px 0}
+.fi{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.fc.f .fi{transform:rotateY(180deg)}
+.fa,.fb{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:1.15rem;overflow:auto}
+.fa{background:var(--p);color:#fff;font:700 1.4rem Georgia,serif}
+.fb{background:var(--card);border:2px solid var(--s);transform:rotateY(180deg)}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.btn{border:0;background:var(--p);color:#fff;padding:10px 18px;border-radius:10px;font:600 .95rem inherit;cursor:pointer}
+.btn.g{background:var(--card);color:var(--ink);border:1.5px solid var(--ln)}
+.opt{display:block;width:100%;text-align:left;margin:7px 0;padding:11px 14px;border:1.5px solid var(--ln);border-radius:10px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 18%,var(--card))}
+.opt.no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 18%,var(--card))}
+.prog{height:6px;background:var(--ln);border-radius:9px;overflow:hidden;margin-bottom:10px}.prog i{display:block;height:100%;background:var(--s);width:0;transition:width .3s}
+input[type=search]{width:100%;padding:10px 12px;border:1.5px solid var(--ln);border-radius:10px;background:var(--card);color:var(--ink);font:inherit}
+footer{text-align:center;color:var(--mut);padding:20px;font-size:.85rem;border-top:1px solid var(--ln);max-width:960px;margin:auto}
+@media(prefers-reduced-motion:reduce){.fi{transition:none}}
+.mmbar{display:flex;gap:6px;margin-bottom:8px}.mm ul{list-style:none;margin:0;padding:0 0 0 18px;border-left:2px solid var(--ln)}.mm>ul{padding-left:0;border:0}.mm li{margin:4px 0}.mm .nb{display:flex;align-items:center;gap:8px;width:100%;text-align:left;border:1.5px solid var(--ln);background:var(--card);color:var(--ink);border-radius:9px;padding:7px 10px;font:600 .93rem inherit;cursor:pointer}.mm .nb.p{border-color:var(--p)}.mm .nb .ar{flex:none;width:1em;color:var(--s);transition:transform .15s}.mm li.open>.nb .ar{transform:rotate(90deg)}.mm .l1>.nb{background:var(--p);color:#fff;border-color:var(--p)}.mm .l1>.nb .ar{color:#fff}.mm .l2>.nb{border-color:var(--p);font-size:1rem}.mm .rel{font:600 .68rem inherit;color:var(--s);background:var(--bg);border-radius:99px;padding:1px 8px;margin-left:auto;white-space:nowrap}.mm .l1>.nb .rel{background:#fff3}.mm .dt{font:400 .85rem inherit;color:var(--mut);margin:2px 0 0 10px}.mm li:not(.open)>ul{display:none}.mm .lf>.nb{cursor:default;font-weight:500}.mmh{font:700 1.1rem Georgia,serif;margin:16px 0 8px;color:var(--p)}#mr div{padding:5px 0;border-bottom:1px solid var(--ln);font-size:.92rem}#mr div:last-child{border:0}#mr b{color:var(--p)}#mr i{color:var(--s);font-style:normal;font-weight:700}
+.fc{height:clamp(320px,62vh,460px)}.fa{font:700 1.15rem/1.4 Georgia,serif}.fb{display:block;text-align:left;font-size:.95rem}.fb .tg{font:700 .72rem system-ui,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--s);margin-top:8px}.fb .tg:first-child{margin-top:0}.bt{white-space:pre-line}.bt.ex{color:var(--mut)}.fa{white-space:pre-line}
+.qsum{margin-top:16px;border-collapse:collapse;width:100%;max-width:320px}.qsum th,.qsum td{border:1px solid var(--ln);padding:6px 10px;text-align:left}
+</style><style>
+:root{--bg:#f1e6e0;--card:#fff;--ink:#2b1416;--mut:#7a5a5c;--p:#7a1527;--s:#c8452f;--ln:#e6d0cb;--ok:#1d7a45;--bad:#b3261e}
+body{font-family:Georgia,"Times New Roman",serif;font-size:17px;line-height:1.6}
+header{max-width:960px;border-bottom:3px double var(--p);padding-bottom:14px;margin-bottom:0}
+h1{font-size:clamp(2rem,6vw,2.8rem);letter-spacing:0}
+header p{font-style:italic}
+nav{gap:0;border-bottom:1px solid var(--ln);margin:0 auto 18px;padding:0 18px;max-width:960px}
+nav button{border:0;border-bottom:3px solid transparent;border-radius:0;background:none;color:var(--mut);padding:12px 16px;font-family:inherit;font-size:.95rem}
+nav button[aria-selected=true]{background:none;color:var(--p);border-bottom-color:var(--s)}
+h2{font-size:1.6rem;color:var(--p);border-bottom:1px solid var(--ln);padding-bottom:6px;margin-bottom:16px}
+.card,.note,.node,.chip,.opt,.btn,.steps button,input[type=search]{border-radius:4px}
+.card{box-shadow:0 1px 0 var(--ln)}
+.grid .card{border-left:4px solid var(--p);counter-increment:r}
+.grid .card:before{content:"Key point " counter(r);display:block;font:700 .78rem system-ui,sans-serif;color:var(--s);margin-bottom:3px}
+.grid{counter-reset:r}
+.grid .card b{display:none}
+th{background:var(--p);color:#fff;font-family:system-ui,sans-serif;font-size:.85rem}
+tr:nth-child(even) td{background:color-mix(in srgb,var(--p) 4%,var(--card))}
+td:first-child{color:var(--p)}
+.chip.on{background:var(--p);border-color:var(--p)}
+.node.on,.steps button.on{background:var(--p);border-color:var(--p)}
+.note{border:1px solid var(--ln);border-left:4px solid var(--s);background:var(--card)}
+.tl button:before{background:var(--s);border-radius:2px;transform:rotate(45deg)}
+.list button.on{background:var(--p)}
+.view h3{color:var(--p)}
+.fa{background:var(--p);border-radius:6px;border-bottom:6px solid var(--s)}
+.fb{border-radius:6px;border:1px solid var(--ln);border-top:6px solid var(--s);background:repeating-linear-gradient(var(--card),var(--card) 31px,var(--ln) 32px)}
+.btn{background:var(--p)}.btn.g{background:var(--card)}
+#qz .card{counter-reset:o}
+.opt{counter-increment:o;font-family:inherit}
+.opt:before{content:counter(o,upper-alpha) ".  ";font-weight:700;color:var(--p)}
+.prog i{background:var(--s)}
+footer{font-family:system-ui,sans-serif}
+.lv{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 14px}
+.lvb{display:flex;flex-direction:column;gap:2px;align-items:flex-start;text-align:left;padding:12px 14px;border:1.5px solid var(--ln);border-left:5px solid var(--s);border-radius:4px;background:var(--card);color:var(--ink);cursor:pointer;font:inherit}
+.lvb b{color:var(--p);font-size:1rem}.lvb span{font:.8rem system-ui,sans-serif;color:var(--mut)}
+.lvb.on{background:var(--p);border-color:var(--p);border-left-color:var(--s)}.lvb.on b,.lvb.on span{color:#fff}
+@media(max-width:520px){.lv{grid-template-columns:1fr}}
+.ct{display:inline-block;margin:0 0 12px;padding:10px 22px;border:2px solid var(--p);border-bottom:4px solid var(--s);border-radius:6px;background:var(--card);color:var(--ink);font:700 1.15rem system-ui,sans-serif}.ct b{color:var(--s);font-size:1.25rem;margin-inline-start:6px;letter-spacing:.02em}
+header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px 18px}header .ct{margin:0;padding:8px 18px;font-size:1.05rem}header .ct b{font-size:1.2rem}
+a.ct{display:inline-flex;align-items:center;gap:8px;text-decoration:none}a.ct svg{flex:none}
+.ovw .card{margin-bottom:14px}.ovw h3{margin:0 0 8px;color:var(--p);font:700 1.2rem Georgia,serif;border-bottom:2px solid var(--s);padding-bottom:4px}
+.ovw h4{margin:14px 0 4px;color:var(--s);font:700 .95rem system-ui,sans-serif}.ovw .sub{margin:10px 0 2px;font:700 .85rem system-ui,sans-serif;color:var(--mut)}
+.ovw ul,.ovw ol{margin:4px 0;padding-inline-start:22px}.ovw li{margin:4px 0}.ovw p{margin:6px 0}
+.ovw td:first-child{white-space:normal}.ovw .card:before{content:none}
+</style><style>
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;margin:0 0 12px;color:var(--mut)}.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.dg .dh{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}.dg .dh h3{margin:0;color:var(--p);font:700 1.2rem Georgia,serif}
+.bdg{background:var(--bg);border:1px solid var(--ln);border-radius:99px;padding:2px 10px;font-size:.75rem;color:var(--mut)}
+.pp{margin:6px 0;color:var(--ink)}.src{font-size:.8rem;color:var(--mut);margin:0 0 8px}
+.bar2{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.cv{overflow:auto;border:1px solid var(--ln);border-radius:10px;padding:12px;max-height:70vh;background:var(--bg);font-size:16px}
+.cv ul{list-style:none;margin:6px 0 0 11px;padding:0 0 0 1.4em;border-left:2px solid var(--ln)}.cv li{position:relative;margin:7px 0}
+.cv li:before{content:"";position:absolute;left:-1.4em;top:1.05em;width:1.1em;border-top:2px solid var(--ln)}
+.cv li.cl>ul{display:none}.nr{display:flex;align-items:center;gap:6px}
+.tg{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--ln);background:var(--card);color:var(--ink);cursor:pointer;padding:0;line-height:1}
+.nd{border:2px solid var(--p);background:var(--card);color:var(--ink);border-radius:10px;padding:.5em .8em;font-family:inherit;font-weight:600;font-size:.9em;line-height:1.3;text-align:left;cursor:pointer;transition:box-shadow .15s}
+.r-m{background:var(--p);color:#fff}.r-b{border-color:var(--s)}.r-s{border-color:#b03a6a}.r-r{border-color:var(--ok)}.r-w{border-color:var(--bad);background:#fdf0ee}
+.nd.rel{box-shadow:0 0 0 3px #f0b3a8}.nd.on{box-shadow:0 0 0 3px var(--s)}
+.sq{display:flex;flex-direction:column;align-items:flex-start;margin:8px 0 0 4px}.sq.h{flex-direction:row;align-items:flex-start}
+.it{display:flex;flex-direction:column;align-items:flex-start}.ar{display:flex;gap:8px;align-items:center;color:var(--s);padding:5px 10px;font-size:.85em}.sq.h .ar{flex-direction:column;padding:8px 4px;text-align:center;max-width:90px}
+.dt{background:var(--card);border:1px dashed var(--p);border-radius:10px;padding:12px;margin-top:10px;min-height:56px}.dt p{margin:4px 0}.dt ul{margin:4px 0;padding-left:20px}.rl{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px}
+</style><style id="dgfx">
+.dg{position:relative;overflow:hidden;border:0;border-radius:16px;box-shadow:0 6px 22px rgba(122,21,39,.12);padding-top:22px;animation:dgin .5s ease both}
+.dg:before{content:"";position:absolute;inset:0 0 auto 0;height:7px;background:linear-gradient(90deg,var(--p),#b03a6a,var(--ok),var(--s))}
+@keyframes dgin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.dg .dh h3{font-size:1.3rem;background:linear-gradient(90deg,var(--p),#b03a6a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dg .bdg{background:linear-gradient(135deg,var(--p),#b03a6a);color:#fff;border:0;padding:3px 12px;font-weight:700;letter-spacing:.03em}
+.dg .src{border-inline-start:3px solid var(--s);padding-inline-start:8px}
+.cv{background-color:#fcf6f3;background-image:radial-gradient(circle,#ecd8d3 1px,transparent 1.3px);background-size:18px 18px;border-radius:14px;border:1px solid var(--ln)}
+.nd{border-width:0;border-inline-start:6px solid var(--c,var(--p));border-radius:12px;background:color-mix(in srgb,var(--c,var(--p)) 9%,#fff);box-shadow:0 2px 6px rgba(60,15,20,.10);transition:transform .15s,box-shadow .2s}
+.nd:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 8px 16px rgba(60,15,20,.18)}
+.r-m{--c:var(--p);background:linear-gradient(135deg,var(--p),#a52a40);color:#fff;font-size:1.05em;padding:.65em 1.1em;border-radius:99px;box-shadow:0 6px 16px rgba(122,21,39,.35)}
+.r-b{--c:var(--s)}.r-s{--c:#b03a6a}.r-r{--c:var(--ok)}.r-w{--c:var(--bad);background:color-mix(in srgb,var(--bad) 10%,#fff)}
+.r-m:hover{color:#fff}
+.nd.rel{box-shadow:0 0 0 3px #f0b3a8;animation:relp 1.4s ease-in-out infinite}
+@keyframes relp{50%{box-shadow:0 0 0 7px rgba(240,179,168,.35)}}
+.nd.on{box-shadow:0 0 0 3px var(--s),0 10px 22px rgba(200,69,47,.3);transform:scale(1.04)}
+.cv ul{border-left:2px dashed #dbb3ae}
+.cv li:before{border-top:2px dashed #dbb3ae}
+.cv li:after{content:"";position:absolute;left:-1.4em;top:calc(1.05em - 4px);width:8px;height:8px;border-radius:50%;background:var(--s);margin-left:-4px}
+.tg{background:var(--p);color:#fff;border:0;font-weight:700;transition:transform .2s}
+.tg:hover{transform:scale(1.2) rotate(90deg)}
+.sq{counter-reset:st;border-inline-start:0}
+.sq .it{counter-increment:st;position:relative;padding-inline-start:34px}
+.sq .it:before{content:counter(st);position:absolute;inset-inline-start:0;top:2px;width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--s),#c0476a);color:#fff;font:700 .8rem system-ui;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(200,69,47,.4)}
+.ar{color:var(--p);font-weight:700}.ar span{display:inline-block;font-size:1.4em;animation:flow 1.2s ease-in-out infinite}
+.sq:not(.h) .ar span{animation-name:flowd}
+@keyframes flow{50%{transform:translateX(6px)}}
+@keyframes flowd{50%{transform:translateY(5px)}}
+.ar small{background:#fff;border:1px solid var(--ln);border-radius:99px;padding:1px 9px;color:var(--mut);font-weight:400}
+.dt{border:0;border-inline-start:5px solid var(--s);background:linear-gradient(135deg,#fff,#fcf4f1);box-shadow:0 4px 14px rgba(60,15,20,.10);border-radius:12px;animation:dtin .25s ease}
+@keyframes dtin{from{opacity:.3;transform:translateY(6px)}}
+.dt>b{color:var(--p);font-size:1.1em}
+.dg .chip{border-radius:99px;transition:background .15s,transform .15s}
+.dg .chip:hover{background:var(--p);color:#fff;transform:translateY(-1px)}
+.legend span{background:#fff;border:1px solid var(--ln);border-radius:99px;padding:3px 10px}
+@media(prefers-reduced-motion:reduce){.dg,.nd,.ar span,.dt,.nd.rel{animation:none!important;transition:none!important}}
+</style>
+<style id="dgpro">
+/* ===== Professional diagrams ===== */
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.legend span{display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--ln);border-radius:99px;padding:5px 12px;font:600 .78rem system-ui,sans-serif;color:var(--ink);box-shadow:0 1px 2px rgba(60,15,20,.06)}
+.legend i{width:11px;height:11px;border-radius:3px;margin:0}
+.dgx{position:relative;overflow:hidden;border:0;border-radius:18px;padding:24px 18px 18px;margin-bottom:26px;box-shadow:0 10px 30px rgba(122,21,39,.13),0 1px 3px rgba(122,21,39,.1)}
+.dgx:before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:linear-gradient(90deg,#7a1527,#b03a6a,#1d7a45,#c8452f)}
+.dx-h{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.dx-no{flex:none;width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#7a1527,#b03a6a);color:#fff;font:700 1.1rem Georgia,serif;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(122,21,39,.3)}
+.dx-ht{flex:1 1 220px;min-width:0}
+.dx-ht h3{margin:0;color:var(--p);font:700 1.25rem/1.25 Georgia,serif}
+.dx-p{margin:2px 0 0;color:var(--mut);font:.9rem/1.4 system-ui,sans-serif}
+.dx-bg{flex:none;background:#f8e9e7;border:1px solid #ecc9c6;color:#7a1527;border-radius:99px;padding:4px 12px;font:700 .72rem system-ui,sans-serif;letter-spacing:.05em;text-transform:uppercase}
+.dx-s{margin:10px 0 12px;font:.78rem system-ui,sans-serif;color:var(--mut);border-inline-start:3px solid var(--s);padding-inline-start:9px}
+.dx-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.dx-bt{border:1px solid var(--ln);background:#fff;color:var(--ink);border-radius:8px;padding:6px 12px;font:600 .8rem system-ui,sans-serif;cursor:pointer;min-width:34px;transition:background .15s,color .15s,border-color .15s}
+.dx-bt:hover{background:var(--p);border-color:var(--p);color:#fff}
+.dx-st{position:relative;overflow:auto;max-height:72vh;border:1px solid var(--ln);border-radius:14px;background-color:#fcf6f3;background-image:radial-gradient(circle,#ecd8d3 1px,transparent 1.4px);background-size:20px 20px;-webkit-overflow-scrolling:touch}
+.dx-wrap{position:relative}
+.dx-cv{position:absolute;left:0;top:0;transform-origin:0 0;--nw:222px}
+.dx-svg{position:absolute;left:0;top:0;z-index:0;pointer-events:none}
+.dx-svg svg{display:block;overflow:visible}
+.dx-pl{position:absolute;left:0;top:0;z-index:4;pointer-events:none}
+.e{fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:.6;transition:opacity .2s,stroke-width .2s}
+.e.rl{opacity:1}
+.e.x{stroke-dasharray:7 6;opacity:.85}
+.e.x.lk{opacity:.4}
+.e.t{opacity:.55}
+.hs .e{opacity:.18}
+.hs .e.hi{opacity:1;stroke-width:3.4}
+.dx-pill{position:absolute;transform:translate(-50%,-50%);background:#fff;border:1px solid #e6d0cb;color:#c8452f;font:700 10.5px/1 system-ui,sans-serif;padding:4px 9px;border-radius:99px;white-space:nowrap;box-shadow:0 2px 5px rgba(60,15,20,.12)}
+.dx-pill.lk{opacity:0;transition:opacity .2s}.dx-pill.lk.hi{opacity:1}
+.dx-pill.r{transform:translate(14px,-50%);color:#7a1527}
+.dx-nd{position:absolute;z-index:2;box-sizing:border-box;width:var(--nw);padding:11px 32px 11px 20px;border-radius:12px;text-align:left;cursor:pointer;
+ background:color-mix(in srgb,var(--c) 7%,#fff);color:#2b1416;font:600 13.5px/1.32 system-ui,-apple-system,"Segoe UI",sans-serif;
+ box-shadow:0 1px 2px rgba(60,15,20,.14),0 6px 16px rgba(60,15,20,.09);transition:box-shadow .18s,transform .18s;animation:dxin .35s ease backwards}
+@keyframes dxin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.dx-nd:before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:5px;border-radius:0 5px 5px 0;background:var(--c)}
+.dx-nd:hover{transform:translateY(-2px);box-shadow:0 2px 4px rgba(60,15,20,.16),0 12px 24px rgba(60,15,20,.16)}
+.dx-nd:focus-visible{outline:3px solid #c8452f;outline-offset:3px}
+.dx-nd.rel{box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 38%,transparent),0 6px 16px rgba(60,15,20,.12)}
+.dx-nd.on{background:var(--c);color:#fff;transform:translateY(-2px) scale(1.03);box-shadow:0 0 0 3px #fff,0 0 0 6px var(--c),0 14px 26px rgba(60,15,20,.3)}
+.dx-nd.on:before{background:#fff}
+.dx-nd.root{padding:14px 34px 14px 22px;border-radius:14px;font-size:15px;color:#fff;background:linear-gradient(135deg,#7a1527,#a52a40);box-shadow:0 10px 24px rgba(122,21,39,.4)}
+.dx-nd.root:before{display:none}
+.dx-nd.root.on{box-shadow:0 0 0 3px #fff,0 0 0 6px #7a1527,0 14px 26px rgba(60,15,20,.35)}
+.dx-nd.ban{padding:16px 24px 18px;border-radius:16px;width:auto}
+.dx-tag{display:inline-block;margin-bottom:6px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:2px 10px;font:700 .66rem system-ui,sans-serif;letter-spacing:.09em;text-transform:uppercase}
+.dx-nd.ban .dx-lb{display:block;font:700 1.15rem/1.25 Georgia,serif}
+.dx-ds{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-top:6px;font:400 .82rem/1.5 system-ui,sans-serif;opacity:.92}
+.dx-nd.stp{padding-left:56px}
+.dx-nd.stp:before{display:none}
+.dx-bd{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;font:700 .82rem system-ui,sans-serif;font-style:normal;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(60,15,20,.3)}
+.dx-nd.on .dx-bd{background:#fff;color:var(--c)}
+.dxtl .dx-bd{left:18px;width:16px;height:16px;border:3px solid #fff;box-shadow:0 0 0 2.5px var(--c)}
+.dxtl .dx-nd.stp{padding-left:50px}
+.dx-sub{display:block;margin-top:4px;font:400 12.5px/1.45 system-ui,sans-serif;color:#7a5a5c}
+.dx-nd.on .dx-sub{color:rgba(255,255,255,.92)}
+.dx-tg{position:absolute;right:-12px;top:50%;transform:translateY(-50%);min-width:24px;height:24px;padding:0 6px;border-radius:99px;border:2px solid var(--c);background:#fff;color:var(--c);font:700 12px/1 system-ui,sans-serif;cursor:pointer;z-index:3;box-shadow:0 2px 5px rgba(60,15,20,.2);transition:background .15s,color .15s}
+.dx-tg:hover{background:var(--c);color:#fff}
+.dx-dt{margin-top:12px;padding:14px 16px;border-radius:12px;border-inline-start:6px solid var(--c,#7a1527);background:linear-gradient(135deg,#fff,#fcf4f1);box-shadow:0 4px 14px rgba(60,15,20,.1);animation:dxin .25s ease backwards;min-height:56px}
+.dx-dt h4{margin:2px 0 6px;color:var(--c,#7a1527);font:700 1.15rem Georgia,serif}
+.dx-dt p{margin:4px 0}.dx-dt ul{margin:6px 0;padding-inline-start:20px}.dx-dt li{margin:3px 0}
+.dx-hint{color:var(--mut);font:.9rem system-ui,sans-serif}
+.dx-dk{display:inline-flex;align-items:center;gap:6px;font:700 .68rem system-ui,sans-serif;letter-spacing:.07em;text-transform:uppercase;color:var(--c)}
+.dx-dk i{width:9px;height:9px;border-radius:3px;background:var(--c)}
+.dx-pa{margin:4px 0 0;font:.76rem system-ui,sans-serif;color:var(--mut)}
+.dx-g{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px}
+.dx-g small{font:700 .7rem system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin-inline-end:4px}
+.dx-ch{display:inline-flex;align-items:center;gap:6px;border:1.5px solid color-mix(in srgb,var(--c) 45%,#fff);background:color-mix(in srgb,var(--c) 7%,#fff);color:#2b1416;border-radius:99px;padding:4px 11px;font:600 .8rem system-ui,sans-serif;cursor:pointer;transition:background .15s,color .15s}
+.dx-ch i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.dx-ch:hover{background:var(--c);color:#fff}.dx-ch:hover i{background:#fff}
+.dgx:fullscreen{overflow:auto;background:var(--bg);padding:22px;border-radius:0}
+.dgx:fullscreen .dx-st{max-height:calc(100vh - 300px)}
+@media(max-width:600px){.dgx{padding:20px 12px 14px}.dx-ht h3{font-size:1.1rem}.dx-nd{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.dx-nd,.dx-dt{animation:none!important;transition:none!important}.e{transition:none}}
+</style>
+<style id="acad">
+/* ===== Academic study theme (appearance only) ===== */
+:root{--bg:#f1e6e0;--card:#fffaf8;--ink:#2b1416;--mut:#7a5a5c;--ln:#e4cdc8;--p:#7a1527;--s:#c8452f;--ok:#2e6b3b;--bad:#a3271d;--paper:#fffaf8;--rule:#e3a39a;--serif:Charter,"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,"Times New Roman",serif}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font:17.5px/1.7 var(--serif);-webkit-font-smoothing:antialiased}
+header{max-width:960px;margin:0 auto;padding:30px 0 14px;border:0;border-bottom:0;gap:10px 18px}
+h1{font:700 clamp(1.9rem,5.5vw,2.6rem)/1.1 var(--serif);color:var(--ink);letter-spacing:.01em;font-variant:small-caps;text-transform:none}
+header p{font:italic 1rem var(--serif);color:var(--mut);margin-top:4px}
+header>div{padding-bottom:10px;border-bottom:3px double var(--ink);min-width:min(100%,360px);flex:1 1 360px}
+header .ct{border:1px solid var(--ink);border-bottom-width:3px;border-radius:0;background:var(--paper);box-shadow:none;font:600 .95rem var(--serif);padding:7px 14px}
+header .ct b{color:var(--s);font-size:1rem}
+/* tabs like book index tabs */
+nav{max-width:960px;margin:6px auto 0;padding:0;gap:3px;border:0;align-items:flex-end}
+nav button{border:1px solid var(--ln);border-bottom:0;border-radius:3px 3px 0 0;background:#ead6d1;color:var(--mut);padding:9px 16px 8px;font:600 .9rem var(--serif);letter-spacing:.02em;margin-bottom:0;position:relative;top:1px}
+nav button[aria-selected=true]{background:var(--paper);color:var(--ink);border-color:var(--ln);border-bottom:1px solid var(--paper);padding-top:11px;font-weight:700;box-shadow:inset 0 3px 0 var(--s)}
+/* the sheet */
+main{max-width:960px;margin:0 auto 40px;background:var(--paper);border:1px solid var(--ln);padding:26px 30px 40px 56px;position:relative;box-shadow:0 1px 0 #d9bdb8,0 6px 0 -3px #e4cdc8}
+main:before{content:"";position:absolute;left:40px;top:0;bottom:0;border-left:1px solid var(--rule)}
+@media(max-width:1000px){header,nav{padding-left:14px;padding-right:14px}main{margin-left:0;margin-right:0}}@media(max-width:640px){main{padding:18px 16px 28px 30px}main:before{left:18px}}
+h2{font:700 1.65rem/1.2 var(--serif);color:var(--ink);border-bottom:2px solid var(--ink);padding-bottom:6px;margin:0 0 18px;letter-spacing:.01em}
+h2:before{color:var(--s);margin-right:.5em;font-variant:normal}
+#s0>h2:before{content:"I."}#s1>h2:before{content:"II."}#s2>h2:before{content:"III."}#s3>h2:before{content:"IV."}#s4>h2:before{content:"V."}
+h3{font-family:var(--serif)}
+/* cards become ruled textbook blocks */
+.card{background:transparent;border:0;border-radius:0;box-shadow:none;padding:14px 0 16px;margin:0 0 6px;border-bottom:1px solid var(--ln)}
+.ovw .card{padding:14px 0 16px}
+.ovw h3{font:700 1.08rem var(--serif);font-variant:small-caps;letter-spacing:.05em;color:var(--p);border:0;border-bottom:1px solid var(--ink);padding-bottom:3px;margin:0 0 10px}
+.ovw h4{font:700 .95rem var(--serif);font-style:italic;color:var(--s)}
+.ovw .sub{font:700 .78rem var(--serif);font-variant:small-caps;letter-spacing:.06em;color:var(--mut)}
+.ovw ul{list-style:square}.ovw li::marker{color:var(--s)}
+.grid .card{border:1px solid var(--ln);border-left:4px solid var(--s);background:#fbf1ee;padding:12px 14px;margin:0}
+.grid .card:before{font:700 .72rem var(--serif);font-variant:small-caps;letter-spacing:.08em;color:var(--s)}
+table{font-size:.95rem}
+th{background:transparent;color:var(--ink);font:700 .8rem var(--serif);font-variant:small-caps;letter-spacing:.06em;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink)}
+td,th{border-bottom:1px solid var(--ln);padding:8px 10px 8px 4px}
+tr:nth-child(even) td{background:transparent}
+tbody tr:last-child td{border-bottom:2px solid var(--ink)}
+td:first-child{color:var(--p)}
+.chip,.node,.steps button,.btn,.opt,input[type=search],.note{border-radius:2px}
+.chip{border:1px solid var(--ln);background:var(--paper);font:.85rem var(--serif)}
+.chip.on,.node.on,.steps button.on{background:var(--p);border-color:var(--p);color:#fff}
+.btn{background:var(--p);font:600 .92rem var(--serif);letter-spacing:.02em;padding:9px 18px}
+.btn.g{background:var(--paper);color:var(--ink);border:1px solid var(--ink)}
+.note{background:#fbf1ee;border:0;border-left:4px solid var(--s)}
+/* diagrams: figure plates */
+.legend span{border-radius:2px;box-shadow:none;background:var(--paper);font:600 .78rem var(--serif)}
+.dg,.dgx{border:1px solid var(--ink);border-radius:0;box-shadow:none;background:var(--paper);animation:none;padding:20px 16px 16px;margin-bottom:22px}
+.dg:before,.dgx:before{height:4px;background:var(--p)}
+.dx-no{border-radius:0;background:var(--p);box-shadow:none;font-family:var(--serif)}
+.dx-ht h3{font-family:var(--serif)}
+.dx-p{font-family:var(--serif);font-style:italic}
+.dx-bg{border-radius:0;background:transparent;border:1px solid var(--ink);color:var(--ink);font-family:var(--serif)}
+.dx-s{font-family:var(--serif);font-style:italic;border-inline-start:2px solid var(--s)}
+.dx-bt{border-radius:2px;border:1px solid var(--ink);background:var(--paper);font-family:var(--serif)}
+.dx-st,.cv{border:1px solid var(--ink);border-radius:0;background-color:#fcf6f3;background-image:linear-gradient(#ecd8d3 1px,transparent 1px),linear-gradient(90deg,#ecd8d3 1px,transparent 1px);background-size:24px 24px}
+.dx-nd{border-radius:2px;box-shadow:none;border:1px solid color-mix(in srgb,var(--c) 55%,#fff);background:color-mix(in srgb,var(--c) 6%,#fffaf8);animation:none;font-family:var(--serif);font-weight:600}
+.dx-nd:hover{transform:none;box-shadow:0 0 0 2px color-mix(in srgb,var(--c) 40%,transparent)}
+.dx-nd.rel{box-shadow:0 0 0 2px color-mix(in srgb,var(--c) 45%,transparent)}
+.dx-nd.on{transform:none;box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--c)}
+.dx-nd.root{background:var(--p);border-radius:2px;box-shadow:none;border-color:var(--p)}
+.dx-nd.root.on{box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--p)}
+.dx-nd.ban{border-radius:2px}
+.dx-tag{border-radius:0}
+.dx-bd{box-shadow:none;border-radius:50%}
+.dx-pill{border-radius:2px;box-shadow:none;font-family:var(--serif);background:var(--paper)}
+.dx-tg{box-shadow:none;border-radius:50%}
+.dx-dt,.dt{border-radius:0;box-shadow:none;animation:none;background:#fbf1ee;border:0;border-inline-start:4px solid var(--c,var(--s))}
+.dx-dt h4,.dx-dt p,.dx-dt li{font-family:var(--serif)}
+.dx-ch{border-radius:2px;font-family:var(--serif)}
+.dx-ch:hover{color:#fff}
+.dx-hint,.dx-pa,.dx-dk,.dx-g small,.dx-sub{font-family:var(--serif)}
+.dg .chip{border-radius:2px}
+.dx-nd,.dx-pill,.nb,.lvb,.opt{font-family:var(--serif)}
+/* mini map */
+.mm .nb{border-radius:2px;border:1px solid var(--ln);background:var(--paper);font-family:var(--serif);font-weight:600}
+.mm .l1>.nb{background:var(--p);border-color:var(--p)}
+.mm ul{border-left:1px solid var(--ink)}
+#mr div{padding:7px 0;border-bottom:1px dotted var(--ln)}
+/* flash cards: index cards */
+.fa,.fb{border-radius:2px}
+.fa{background:var(--paper);color:var(--ink);border:1px solid var(--ink);border-top:6px solid var(--s);font:700 1.25rem/1.45 var(--serif);box-shadow:3px 3px 0 #e4cdc8}
+.fb{border:1px solid var(--ink);border-top:6px solid var(--p);box-shadow:3px 3px 0 #e4cdc8;font-family:var(--serif);background:repeating-linear-gradient(var(--paper),var(--paper) 31px,#ecd9d5 32px)}
+.fb .tg{font-family:var(--serif);font-variant:small-caps;font-size:.8rem;letter-spacing:.08em;color:var(--s)}
+.lvb{border:1px solid var(--ln);border-left:4px solid var(--s);border-radius:2px;background:var(--paper)}
+.lvb b{font-family:var(--serif)}.lvb span{font-family:var(--serif)}
+.lvb.on{background:var(--p);border-color:var(--p);border-left-color:var(--s)}
+/* quiz: exam paper */
+#qz .card{border:1px solid var(--ink);border-top:4px double var(--ink);padding:16px 20px 18px;background:var(--paper)}
+#qz .card small{font:700 .75rem var(--serif);font-variant:small-caps;letter-spacing:.07em;color:var(--mut)}
+#qz .card h3{font:700 1.2rem/1.45 var(--serif);color:var(--ink);margin:8px 0 10px}
+.opt{border:1px solid var(--ln);background:transparent;padding:10px 14px;font-size:1rem}
+.opt:hover{background:#f7e9e5}
+.opt:before{font-family:var(--serif);color:var(--s)}
+.opt.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--paper))}
+.opt.no{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--paper))}
+.prog{height:4px;border-radius:0;background:var(--ln)}.prog i{background:var(--s)}
+.qsum{max-width:300px}.qsum th,.qsum td{border:0;border-bottom:1px solid var(--ln)}
+.qsum th{border-top:2px solid var(--ink);border-bottom:1px solid var(--ink)}
+.qsum tr:last-child td{border-bottom:2px solid var(--ink)}
+input[type=search]{border:1px solid var(--ink);background:var(--paper);font-family:var(--serif)}
+@media print{body,html{background:#fff}nav,.bar,.dx-bar{display:none}main{border:0;box-shadow:none}section{display:block!important}}
+</style>
+<style id="crimson">
+/* ===== Crimson study theme (hero + tabs + cards) ===== */
+:root{--bg:#f1e6e0;--paper:#fffaf8;--card:#fffaf8;--ink:#2b1416;--mut:#7a5a5c;--ln:#e6d0cb;--p:#7a1527;--s:#c8452f;--ok:#2e6b3b;--bad:#b3222f;--rose:#f0b3a8;--sand:#f2c9a8;
+--serif:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--disp:Fraunces,Georgia,"Times New Roman",serif}
+html{background:var(--bg)}
+body{background:var(--bg);font:400 16.5px/1.65 var(--serif);color:var(--ink)}
+/* hero */
+header.hero{position:relative;overflow:hidden;max-width:none;margin:0;padding:0;display:block;border:0;color:#fff;
+background:linear-gradient(135deg,#2e0a10 0%,#5a1220 55%,#7d2231 100%)}
+header.hero .waves{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero-in{position:relative;max-width:1100px;margin:0 auto;padding:clamp(54px,9vw,96px) 24px clamp(40px,6vw,64px);display:flex;align-items:center;justify-content:space-between;gap:24px}
+header.hero>div.hero-in,.hero-tx{border:0;padding-bottom:0;min-width:0;flex:1 1 auto}
+.hero-tx{max-width:640px}
+.kick{font:700 .95rem var(--serif);letter-spacing:.02em;color:var(--sand);margin-bottom:14px}
+header.hero h1{font:700 clamp(3.2rem,10vw,5.6rem)/.98 var(--disp);color:#fff;font-variant:normal;letter-spacing:-.02em;margin:0}
+header.hero h1 em{font-style:italic;color:var(--sand)}
+header.hero p{font:400 clamp(1rem,2.3vw,1.2rem)/1.65 var(--serif);font-style:normal;color:#f6e3dc;margin:22px 0 0;max-width:560px}
+header.hero .ct{margin-top:24px;display:inline-flex;border:1px solid rgba(255,255,255,.35);border-radius:99px;background:rgba(255,255,255,.1);color:#fff;font:600 .9rem var(--serif);padding:8px 16px;box-shadow:none;backdrop-filter:blur(4px)}
+header.hero .ct b{color:var(--sand);font-size:.95rem}
+.flask{flex:none;width:clamp(110px,18vw,200px);height:auto;opacity:.95}
+@media(max-width:640px){.flask{position:absolute;right:14px;top:18px;width:84px;opacity:.5}}
+/* tabs */
+nav{position:sticky;top:0;z-index:30;max-width:none;margin:0;padding:0 max(14px,calc((100% - 1100px)/2 + 10px));gap:6px;background:#fffaf5;border-bottom:1px solid var(--ln);align-items:stretch;overflow-x:auto;box-shadow:0 2px 10px rgba(60,15,20,.06)}
+nav button{display:inline-flex;align-items:center;gap:9px;border:0;border-bottom:3px solid transparent;border-radius:0;background:none;color:var(--mut);padding:18px 18px 15px;font:600 .98rem var(--serif);letter-spacing:0;top:0;margin:0;white-space:nowrap;box-shadow:none}
+nav button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+nav button:hover{color:var(--p)}
+nav button[aria-selected=true]{background:none;color:var(--ink);font-weight:700;border-bottom:3px solid var(--s);box-shadow:none;padding-top:18px}
+nav button[aria-selected=true] svg{color:var(--p)}
+/* content area: plain, no paper sheet */
+main{max-width:1100px;margin:0 auto;background:none;border:0;box-shadow:none;padding:30px 24px 56px}
+main:before{display:none}
+h2{font:700 clamp(1.9rem,4.5vw,2.5rem)/1.15 var(--disp);color:var(--ink);border:0;padding:0;margin:0 0 6px;letter-spacing:-.01em}
+h2:before{content:none!important}
+#s0>h2:after,#s1>h2:after,#s2>h2:after,#s3>h2:after,#s4>h2:after{content:"";display:block;width:54px;height:4px;border-radius:4px;background:var(--s);margin:12px 0 22px}
+h3,.dx-ht h3,.dx-dt h4,.view h3{font-family:var(--disp)}
+/* cards (like the reference) */
+.card,.ovw .card{background:var(--paper);border:0;border-left:5px solid var(--s);border-radius:3px;box-shadow:0 1px 2px rgba(60,15,20,.06);padding:20px 24px 22px;margin:0 0 16px}
+.ovw h3{font:700 .95rem var(--serif);font-variant:normal;letter-spacing:0;color:var(--p);border:0;padding:0;margin:0 0 8px}
+.ovw h4{font:700 .95rem var(--serif);font-style:normal;color:var(--p)}
+.ovw .sub{font:700 .8rem var(--serif);font-variant:normal;letter-spacing:.04em;color:var(--mut)}
+.ovw ul{list-style:disc}.ovw li::marker{color:var(--s)}
+.ovw b,.ovw strong{color:var(--ink)}
+.grid .card{background:var(--paper);border:0;border-left:5px solid var(--s);padding:18px 20px}
+.grid .card:before{font:700 .8rem var(--serif);font-variant:normal;letter-spacing:0;color:var(--p)}
+th{background:#f5e3df;color:var(--p);border:0;border-bottom:2px solid var(--s);font:700 .8rem var(--serif);font-variant:normal;letter-spacing:.05em;text-transform:uppercase}
+tbody tr:last-child td{border-bottom:1px solid var(--ln)}
+td:first-child{color:var(--p)}
+/* controls */
+.chip,.node,.steps button,.btn,.opt,input[type=search],.note,.dx-bt,.dx-ch{border-radius:8px}
+.chip.on,.node.on,.steps button.on{background:var(--p);border-color:var(--p);color:#fff}
+.btn{background:var(--p);font:600 .92rem var(--serif);border-radius:99px;padding:10px 22px}
+.btn:hover{background:#5f0f1e}
+.btn.g{background:var(--paper);color:var(--ink);border:1.5px solid var(--ln)}
+.note{background:#fbeeea;border:0;border-left:4px solid var(--s)}
+/* diagrams */
+.dg,.dgx{border:0;border-radius:6px;box-shadow:0 2px 14px rgba(60,15,20,.09);background:var(--paper);padding:26px 20px 20px}
+.dg:before,.dgx:before{height:5px;background:linear-gradient(90deg,#4a0f18,var(--p),var(--s),#e8907f)}
+.dx-no{border-radius:10px;background:linear-gradient(135deg,#4a0f18,var(--p));font-family:var(--disp)}
+.dx-p,.dx-s{font-style:normal}
+.dx-bg{border-radius:99px;border:0;background:#f8e3df;color:var(--p)}
+.dx-st,.cv{border:1px solid var(--ln);border-radius:10px;background-color:#fcf6f3;background-image:radial-gradient(circle,#e3c3be 1px,transparent 1.4px);background-size:20px 20px}
+.dx-nd{border-radius:10px;box-shadow:0 1px 3px rgba(60,15,20,.14);border:1px solid color-mix(in srgb,var(--c) 40%,#fff);background:color-mix(in srgb,var(--c) 7%,#fff)}
+.dx-nd:hover{box-shadow:0 6px 16px rgba(60,15,20,.16)}
+.dx-nd.on{box-shadow:0 0 0 3px #fff,0 0 0 5px var(--c),0 10px 22px rgba(60,15,20,.25)}
+.dx-nd.root{background:linear-gradient(135deg,#4a0f18,var(--p));border-radius:12px;box-shadow:0 8px 20px rgba(122,21,39,.35)}
+.dx-nd.ban,.dx-tag{border-radius:12px}.dx-tag{border-radius:99px}
+.dx-pill{border-radius:99px;background:#fff}
+.dx-dt,.dt{border-radius:8px;background:#fbf1ee;border:0;border-inline-start:5px solid var(--c,var(--s))}
+.legend span{border-radius:99px;background:var(--paper)}
+/* mini map */
+.mm .nb{border-radius:8px;border:1px solid var(--ln);background:var(--paper)}
+.mm .l1>.nb{background:linear-gradient(135deg,#4a0f18,var(--p));border-color:var(--p)}
+.mm ul{border-left:2px solid #e3c3be}
+/* flash cards */
+.fa,.fb{border-radius:8px}
+.fa{background:linear-gradient(135deg,#3a0c14,#6b1522);color:#fff;border:0;border-bottom:6px solid var(--sand);box-shadow:0 8px 22px rgba(60,15,20,.22);font:700 1.3rem/1.45 var(--disp)}
+.fb{border:0;border-top:6px solid var(--s);background:var(--paper);box-shadow:0 8px 22px rgba(60,15,20,.14)}
+.fb .tg{color:var(--p);font-variant:normal;letter-spacing:.07em;font-size:.72rem}
+.lvb{border:1.5px solid var(--ln);border-left:5px solid var(--s);border-radius:8px;background:var(--paper)}
+.lvb.on{background:var(--p);border-color:var(--p);border-left-color:var(--sand)}
+/* quiz */
+#qz .card{border:0;border-left:5px solid var(--s);border-top:0;background:var(--paper);padding:20px 24px}
+#qz .card h3{font:700 1.2rem/1.45 var(--disp);color:var(--ink)}
+.opt{border:1.5px solid var(--ln);background:#fff;border-radius:8px}
+.opt:hover{background:#fbeeea}
+.opt:before{color:var(--p)}
+.prog{height:6px;border-radius:9px;background:#ecd8d3}.prog i{background:linear-gradient(90deg,var(--p),var(--s))}
+.qsum th{border:0;border-bottom:2px solid var(--s)}
+.qsum td{border:0;border-bottom:1px solid var(--ln)}.qsum tr:last-child td{border-bottom:1px solid var(--ln)}
+input[type=search]{border:1.5px solid var(--ln);background:#fff}
+button:focus-visible,input:focus-visible{outline:3px solid var(--s)}
+footer{border-color:var(--ln)}
+#qz .card small,.fb .tg{font-variant:normal!important}#qz .card small{font:600 .78rem var(--serif);letter-spacing:.03em;color:var(--mut)}
+</style>
+</head><body>
+<header class="hero"><svg class="waves" viewBox="0 0 1400 400" preserveAspectRatio="none" aria-hidden="true"><path d="M0 300 C 250 230, 450 230, 700 280 S 1150 320, 1400 240" fill="none" stroke="#f0b3a8" stroke-opacity=".22" stroke-width="1.5"/><path d="M0 350 C 300 300, 600 330, 800 310 S 1200 290, 1400 330" fill="none" stroke="#f0b3a8" stroke-opacity=".16" stroke-width="1.5"/></svg>
+<div class="hero-in"><div class="hero-tx"><div class="kick">Physiology — Cardiac Electrophysiology · Lectures 1–2</div><h1>Study<br><em>Smart.</em></h1><p>A compact, hands-on companion for the Cardiac Electrical System and Cardiac Action Potentials lectures — the definitions, the diagrams, the drills, and the recall you need before the exam.</p><a class="ct" dir="ltr" href="https://t.me/Study_smart5" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="#29A9EB" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg><span>Contact</span> <b dir="ltr">@Study_smart5</b></a></div>
+<svg class="flask" viewBox="0 0 220 300" aria-hidden="true"><g stroke-linecap="round" stroke-linejoin="round"><path d="M110 226C34 172 14 118 40 80c20-28 58-26 70 6 12-32 50-34 70-6 26 38 6 92-70 146z" fill="#e8b4a0" fill-opacity=".92" stroke="#f6e3dc" stroke-width="5"/><path d="M92 66c-4-22 4-40 22-50M122 74c4-24 20-40 42-44" fill="none" stroke="#f6e3dc" stroke-width="9"/><path d="M58 138h36l10-30 18 62 14-42h28" fill="none" stroke="#4a0f18" stroke-width="6"/><circle cx="110" cy="136" r="92" fill="none" stroke="#f6e3dc" stroke-opacity=".35" stroke-width="3" stroke-dasharray="2 9"/></g></svg></div></header>
+<nav role="tablist" id="nav"></nav>
+<main>
+<section id="s0"><h2>Overview</h2><div class="ovw" id="ov">
+<div class="card"><h3>Core Idea</h3><p>The heart is a <b>pump made of muscle tissue</b> that needs a source of energy and oxygen, and its pumping action is regulated by an <b>electrical conduction system</b> that coordinates contraction of the different chambers. The heart <b>generates its own electrical signal</b> in the <b>sinus (SA) node</b>, the “natural pacemaker”, which sets the heart rate (normally <b>60–100 beats/min</b>) and the order of conduction: <b>atria → AV node (brief delay) → bundle of His → bundle branches → ventricles</b>. This overview covers two lectures: <b>Lecture 1</b> (anatomy and function of the heart's electrical system) and <b>Lecture 2</b> (<b>cardiac action potentials</b>: non-nodal “fast response” vs nodal “slow response”, their phases and ion conductances, and how antiarrhythmic drugs alter them).</p></div>
+<div class="card"><h3>Learning Points</h3><ul>
+<li>The heart is a muscular pump; its pumping is coordinated by an <b>electrical conduction system</b>.</li>
+<li>The <b>sinus node</b> sits in the <b>upper right atrium</b> and fires regularly, <b>60–100 times/min</b> under normal conditions; each impulse produces <b>one heartbeat</b>.</li>
+<li>The sinus signal controls <b>heart rate</b> (number of impulses) and the <b>sequence of conduction</b> across the heart, giving regular, efficient, coordinated beats.</li>
+<li>The atria are stimulated and contract <b>a fraction of a second before</b> the ventricles, so their blood empties into the ventricles first.</li>
+<li>At the <b>AV node</b> the impulse is <b>slowed for a very short period</b>, then passes via the <b>bundle of His</b> and the <b>right and left bundle branches</b> to the ventricles.</li>
+<li>On the EKG: atrial depolarization → <b>P wave</b>; AV-node pause → <b>PR interval</b>; ventricular spread → <b>QRS complex</b>.</li>
+<li><b>Non-nodal</b> (fast response) action potentials: atrial and ventricular myocytes and the Purkinje system; they have phases <b>0–4</b>, a true resting potential and a plateau.</li>
+<li><b>Nodal</b> (slow response) action potentials: SA and AV nodes; they show <b>automaticity</b> (spontaneous depolarization) and have <b>no phase 1 or phase 2</b>.</li>
+<li>Action potentials result from changes in <b>membrane conductance (g)</b> to Na<sup>+</sup>, K<sup>+</sup> and Ca<sup>++</sup>.</li>
+<li><b>Antiarrhythmic drugs</b> block or facilitate these ion movements to prevent or stop arrhythmias.</li>
+</ul></div>
+<div class="card"><h3>Key Definitions</h3><ul>
+<li><b>Sinus node (sinoatrial / SA node):</b> small mass of specialized tissue in the upper right atrium that generates the electrical stimulus regularly; often called the heart's <b>“natural pacemaker”</b>.</li>
+<li><b>Atrioventricular (AV) node:</b> the node where impulses are slowed for a very short period before continuing to the ventricles.</li>
+<li><b>AV disc:</b> layer of fibrous tissue separating the atria from the ventricles; the wave of electricity is stopped here except at the AV node.</li>
+<li><b>Bundle of His (His bundle):</b> conduction pathway from the AV node into the ventricles; divides into the <b>right and left bundle branches (RBB, LBB)</b>. The LBB itself splits into the <b>left anterior fascicle (LAF)</b> and <b>left posterior fascicle (LPF)</b>.</li>
+<li><b>Normal sinus rhythm:</b> rate between 60 and 100 beats per minute.</li>
+<li><b>Atrial depolarization:</b> spread of the impulse across the right and left atria, causing them to contract and push blood into the ventricles.</li>
+<li><b>P wave:</b> EKG wave generated as the impulse passes through the atria.</li>
+<li><b>PR interval:</b> the pause in electrical activity on the EKG while the impulse travels slowly through the AV node.</li>
+<li><b>QRS complex:</b> EKG deflection generated as the impulse spreads through the ventricles.</li>
+<li><b>Non-nodal action potential (“fast response”):</b> characteristic of atrial and ventricular myocytes and the fast-conducting Purkinje system in the ventricles.</li>
+<li><b>Nodal action potential (“slow response”):</b> characteristic of the sinoatrial and AV nodes.</li>
+<li><b>Automaticity (pacemaker activity):</b> spontaneous depolarization shown by nodal action potentials.</li>
+<li><b>Membrane conductance (g):</b> ease of ion movement (ion currents) into and out of the cell; changes in g alter membrane potential and produce the action potential.</li>
+<li><b>Effective refractory period (ERP):</b> period during which the cell cannot be re-excited; the lecture links its lengthening to delayed reactivation of fast-sodium channels (sodium-channel blockers) and to prolonged phase 3 (potassium-channel blockers).</li>
+<li><b>“Funny” current (I<sub>f</sub>):</b> current through slow inward Na<sup>+</sup> channels during phase 4 of nodal cells.</li>
+<li><b>Antiarrhythmic drugs:</b> drugs that block or facilitate ion movement to alter cardiac action potentials and prevent or stop arrhythmias.</li>
+</ul></div>
+<div class="card"><h3>Classification / Types</h3>
+<h4>1. Components of the cardiac conduction system (figure abbreviations)</h4><ul>
+<li><b>SN</b> sinus node · <b>AVN</b> AV node · <b>RA / LA</b> right / left atrium · <b>RV / LV</b> right / left ventricle.</li>
+<li><b>TV</b> tricuspid valve (separates RA from RV) · <b>MV</b> mitral valve (separates LA from LV).</li>
+<li>AV conduction system: <b>AV node → His bundle → RBB and LBB</b> (LBB → <b>LAF</b> and <b>LPF</b>).</li></ul>
+<h4>2. Types of cardiac action potential</h4><ul>
+<li><b>Non-nodal (fast response):</b> atrial myocytes, ventricular myocytes, Purkinje system.</li>
+<li><b>Nodal (slow response):</b> sinoatrial node and AV node.</li></ul>
+<h4>3. Classes of ion-channel blockers mentioned</h4><ul>
+<li><b>Sodium-channel blockers</b> (non-nodal tissue).</li>
+<li><b>Potassium-channel blockers</b> (non-nodal and nodal tissue).</li>
+<li><b>Calcium-channel blockers</b> (nodal tissue).</li></ul>
+</div>
+<div class="card"><h3>Important Concepts</h3>
+<h4>The heart as an electrical pump</h4><ul>
+<li>Like all muscle, the heart needs a source of <b>energy and oxygen</b> to function.</li>
+<li>The heart's pumping action is regulated by an electrical conduction system that <b>coordinates the contraction of the chambers</b>.</li>
+<li>The heart <b>generates its own</b> electrical signal, produced by the tiny sinus node in the upper portion of the right atrium.</li></ul>
+<h4>How the sinus node controls the heartbeat</h4><ul>
+<li><b>Rate:</b> each electrical impulse generates one heartbeat, so the number of impulses determines the heart rate (normal sinus rhythm 60–100/min; at rest about 60–100 contractions/min, depending on a person's age).</li>
+<li><b>Sequence:</b> the signal controls conduction as it spreads, so the heart muscle cells contract in the correct order, giving regular, efficient, coordinated heartbeats.</li>
+<li>Each <b>ventricular contraction = one heartbeat</b>; atria contract a fraction of a second earlier.</li></ul>
+<h4>Role of the AV node and AV disc</h4><ul>
+<li>The AV disc stops the wave of electricity everywhere except at the AV node.</li>
+<li>The slow, controlled passage through the AV node produces a pause (<b>PR interval</b>) that lets the <b>atria contract fully</b> and empty blood into the ventricles before the ventricles contract.</li></ul>
+<h4>Outcome of ventricular activation</h4><ul>
+<li>Spread through the ventricles causes them to contract, sending blood to the <b>organs of the body (via the left ventricle)</b> and to the <b>lungs (via the right ventricle)</b>.</li></ul>
+<h4>Action potential: general principle</h4><ul>
+<li>Action potentials are determined by movement of different ions (ion currents) into and out of the cell; changes in <b>membrane conductance</b> to these ions change the membrane potential.</li>
+<li>Drugs that block or facilitate these ion movements alter cardiac action potentials to prevent or stop arrhythmias.</li></ul>
+<h4>Non-nodal (fast response) action potential</h4><ul>
+<li>Distinguished by a <b>true resting potential (phase 4)</b>, a <b>fast depolarization (phase 0)</b>, and a <b>prolonged plateau (phase 2)</b>.</li></ul>
+<h4>Nodal (slow response) action potential</h4><ul>
+<li>Shows <b>automaticity</b> and spontaneous depolarization; depolarization is <b>less rapid</b> and action potential duration is <b>shorter</b> than in fast-response cells; <b>no phase 1 or phase 2</b>.</li>
+<li>Changes in membrane conductance to <b>calcium and potassium</b> alter slow-response action potentials.</li></ul>
+<h4>Effects of drugs on action potentials</h4><ul>
+<li><b>Na<sup>+</sup>-channel blockers (non-nodal):</b> decrease fast inward Na<sup>+</sup> movement → lower slope of phase 0 and magnitude of depolarization → principal effect <b>reduced conduction velocity</b>; also <b>increase ERP</b> by delaying reactivation of fast-sodium channels.</li>
+<li><b>K<sup>+</sup>-channel blockers:</b> delay the onset and prolong <b>phase 3</b> repolarization → longer action potential duration and ERP (stated for both non-nodal and nodal tissue).</li>
+<li><b>Ca<sup>++</sup>-channel blockers (nodal):</b> reduce the slope of <b>phase 4</b> → slower spontaneous depolarization → lower pacemaker firing rate; reduce the slope of <b>phase 0</b> → slower conduction velocity in the AV node; lengthen the AV nodal ERP.</li></ul>
+</div>
+<div class="card"><h3>Important Differences</h3><div class="sc"><table><thead><tr><th>Feature</th><th>Non-nodal (fast response)</th><th>Nodal (slow response)</th></tr></thead><tbody>
+<tr><td>Found in</td><td>Atrial and ventricular myocytes; Purkinje system</td><td>Sinoatrial node and AV node</td></tr>
+<tr><td>Resting potential</td><td>True resting potential (phase 4)</td><td>No true resting potential; spontaneous depolarization in phase 4</td></tr>
+<tr><td>Automaticity</td><td>Not described in the lecture</td><td>Yes (pacemaker activity)</td></tr>
+<tr><td>Depolarization</td><td>Fast (phase 0)</td><td>Less rapid</td></tr>
+<tr><td>Action potential duration</td><td>Longer, with prolonged plateau</td><td>Shorter</td></tr>
+<tr><td>Phases present</td><td>0, 1, 2, 3, 4</td><td>0, 3, 4 only (no phase 1 or 2)</td></tr>
+<tr><td>Phase 0 ions</td><td>↑ Na<sup>+</sup>, ↓ K<sup>+</sup> conductance</td><td>↑ Ca<sup>++</sup>, ↓ K<sup>+</sup> conductance</td></tr>
+<tr><td>Phase 4</td><td>↑ K<sup>+</sup>, ↓ Na<sup>+</sup>, ↓ Ca<sup>++</sup> conductance (resting)</td><td>Spontaneous depolarization: “funny” currents (I<sub>f</sub>) through slow inward Na<sup>+</sup> channels; ↑ Ca<sup>++</sup>, ↓ K<sup>+</sup> conductance</td></tr>
+<tr><td>Drug targets in the lecture</td><td>Na<sup>+</sup>-channel blockers; K<sup>+</sup>-channel blockers</td><td>Ca<sup>++</sup>-channel blockers; K<sup>+</sup>-channel blockers</td></tr>
+</tbody></table></div>
+<div class="sc" style="margin-top:12px"><table><thead><tr><th>Drug class</th><th>Phase affected</th><th>Main effects</th></tr></thead><tbody>
+<tr><td>Na<sup>+</sup>-channel blockers (non-nodal)</td><td>Phase 0</td><td>↓ slope and magnitude of depolarization; ↓ conduction velocity; ↑ ERP (delayed reactivation of fast-Na<sup>+</sup> channels)</td></tr>
+<tr><td>K<sup>+</sup>-channel blockers</td><td>Phase 3</td><td>Delayed onset and prolonged repolarization; ↑ action potential duration and ERP</td></tr>
+<tr><td>Ca<sup>++</sup>-channel blockers (nodal)</td><td>Phases 4 and 0</td><td>↓ phase 4 slope (↓ pacemaker firing rate); ↓ phase 0 slope (↓ AV nodal conduction velocity); ↑ AV nodal ERP</td></tr>
+</tbody></table></div>
+<div class="sc" style="margin-top:12px"><table><thead><tr><th>Concept</th><th>Difference</th></tr></thead><tbody>
+<tr><td>Sinus node vs AV node</td><td>Sinus node generates the impulse (60–100/min) and is the natural pacemaker; the AV node slows the impulse briefly before it enters the ventricles.</td></tr>
+<tr><td>Atria vs ventricles (timing)</td><td>Atria are stimulated and contract first (short period), then the ventricles; atrial blood empties into the ventricles before they contract.</td></tr>
+<tr><td>Right vs left ventricle output</td><td>Right ventricle → lungs; left ventricle → organs of the body.</td></tr>
+<tr><td>Right vs left bundle branch</td><td>Each supplies its own ventricle; the left bundle branch further splits into the left anterior and left posterior fascicles.</td></tr>
+<tr><td>P wave vs PR interval vs QRS</td><td>P: atrial depolarization. PR interval: AV-node pause. QRS: ventricular depolarization.</td></tr>
+</tbody></table></div></div>
+<div class="card"><h3>Processes / Stages</h3>
+<h4>Conduction sequence of one heartbeat (Lecture 1)</h4><ol>
+<li><b>Sinus node</b> (upper right atrium) generates the impulse.</li>
+<li>Impulse spreads across the <b>right and left atria</b> (<b>atrial depolarization</b>) → atria contract and push blood into the ventricles; generates the <b>P wave</b>.</li>
+<li>The wave reaches the <b>AV disc</b> and is stopped, except at the <b>AV node</b>.</li>
+<li>Impulse passes slowly through the <b>AV node</b> → pause on the EKG (<b>PR interval</b>) → atria empty fully into the ventricles.</li>
+<li>The AV node conducts the impulse to the <b>His bundle</b>, which passes it to the <b>right and left bundle branches</b> (LBB → LAF and LPF).</li>
+<li>The branches send the impulse to the <b>right and left ventricles</b>, which spread it and contract → <b>QRS complex</b>.</li>
+<li>Blood is pumped to the <b>body (left ventricle)</b> and <b>lungs (right ventricle)</b>.</li></ol>
+<h4>Non-nodal (fast response) action potential phases</h4><div class="sc"><table><thead><tr><th>Phase</th><th>Name</th><th>Conductance changes</th></tr></thead><tbody>
+<tr><td>0</td><td>Rapid depolarization</td><td>↑ Na<sup>+</sup>, ↓ K<sup>+</sup></td></tr>
+<tr><td>1</td><td>Initial repolarization</td><td>↓ Na<sup>+</sup>, ↑ K<sup>+</sup></td></tr>
+<tr><td>2</td><td>Plateau</td><td>↑ Ca<sup>++</sup></td></tr>
+<tr><td>3</td><td>Repolarization</td><td>↑ K<sup>+</sup>, ↓ Ca<sup>++</sup></td></tr>
+<tr><td>4</td><td>Resting potential</td><td>↑ K<sup>+</sup>, ↓ Na<sup>+</sup>, ↓ Ca<sup>++</sup></td></tr>
+</tbody></table></div>
+<h4>Nodal (slow response) action potential phases</h4><div class="sc"><table><thead><tr><th>Phase</th><th>Name</th><th>Conductance changes</th></tr></thead><tbody>
+<tr><td>0</td><td>Depolarization</td><td>↑ Ca<sup>++</sup>, ↓ K<sup>+</sup></td></tr>
+<tr><td>3</td><td>Repolarization</td><td>↑ K<sup>+</sup>, ↓ Ca<sup>++</sup></td></tr>
+<tr><td>4</td><td>Spontaneous depolarization</td><td>“Funny” currents (I<sub>f</sub>) via slow inward Na<sup>+</sup> channels; ↑ Ca<sup>++</sup>, ↓ K<sup>+</sup></td></tr>
+</tbody></table></div>
+<p class="sub">Figures: the non-nodal figure marks the ERP from phase 0 into phase 3; the nodal figure shows a threshold line, with phase 4 rising slowly toward threshold.</p>
+</div>
+<div class="card"><h3>Clinical / Practical Importance</h3><ul>
+<li><b>Arrhythmias</b> are treated or prevented with <b>antiarrhythmic drugs</b> that block or facilitate ion movements and so alter cardiac action potentials.</li>
+<li><b>Na<sup>+</sup>-channel blockers</b> slow conduction velocity and lengthen the ERP in non-nodal tissue.</li>
+<li><b>K<sup>+</sup>-channel blockers</b> prolong repolarization (phase 3), action potential duration and ERP.</li>
+<li><b>Ca<sup>++</sup>-channel blockers</b> lower the pacemaker firing rate, slow AV-node conduction and lengthen AV nodal ERP.</li>
+<li>The <b>EKG</b> reflects the electrical sequence: P wave (atria), PR interval (AV-node pause), QRS complex (ventricles).</li>
+<li>The deliberate <b>AV-node delay</b> allows complete atrial emptying before ventricular contraction.</li>
+</ul></div>
+<div class="card"><h3>Exam Focus</h3><ul>
+<li>The heart as a muscular pump regulated by an electrical conduction system; it needs energy and oxygen.</li>
+<li><b>Sinus node:</b> location (upper right atrium), rate (<b>60–100/min</b>), “natural pacemaker”, controls both <b>rate</b> and <b>sequence</b>.</li>
+<li>Full <b>conduction pathway</b>: SA node → atria → AV node (slowed) → His bundle → right/left bundle branches (LAF, LPF) → ventricles.</li>
+<li>Why the AV node delays the impulse; the role of the <b>AV disc</b>.</li>
+<li><b>EKG correlates:</b> P wave, PR interval, QRS complex.</li>
+<li>Figure abbreviations: SN, AVN, RA, LA, RV, LV, TV, MV, RBB, LBB, LAF, LPF.</li>
+<li>Right ventricle → lungs; left ventricle → body.</li>
+<li><b>Non-nodal vs nodal</b> action potentials: locations, phases present, resting potential vs spontaneous depolarization, speed, duration.</li>
+<li><b>Phase-by-phase ion conductances</b> (0–4) for non-nodal cells and (0, 3, 4) for nodal cells; “funny” currents (I<sub>f</sub>).</li>
+<li><b>Drug effects:</b> Na<sup>+</sup>-channel blockers (phase 0, conduction velocity, ERP); K<sup>+</sup>-channel blockers (phase 3, duration, ERP); Ca<sup>++</sup>-channel blockers (phase 4 and 0, pacemaker rate, AV conduction, ERP).</li>
+</ul></div>
+</div>
+</section>
+
+<section id="s1"><h2>Interactive Diagrams</h2>
+<div class="legend"><span><i style="background:var(--p)"></i>Main concept</span><span><i style="background:var(--s)"></i>Branch / group</span><span><i style="background:#b03a6a"></i>Stage / event</span><span><i style="background:var(--ok)"></i>Item / outcome</span><span><i style="background:var(--bad)"></i>Key warning / caution</span></div>
+<div id="dgs"></div></section>
+<section id="s2"><h2>Mini Map</h2><div class="mmbar"><button class="chip" id="mxa">Expand all</button><button class="chip" id="mca">Collapse all</button></div><div class="card mm" id="mm"></div><h3 class="mmh">Key Relationships</h3><div class="card" id="mr"></div></section>
+<section id="s3"><h2>Flash Cards</h2><div class="lv" id="fl"></div><div class="bar"><span id="fn"></span></div><div class="fc" id="fc" tabindex="0" role="button" aria-label="Flip card"><div class="fi"><div class="fa" id="fq"></div><div class="fb" id="fans"></div></div></div><div class="bar"><button class="btn g" id="fp">Previous</button><button class="btn" id="ff">Flip</button><button class="btn g" id="fx">Next</button><button class="btn g" id="fs">Shuffle</button></div><table class="qsum"><thead><tr><th>Level</th><th>Number</th></tr></thead><tbody><tr><td>Easy</td><td>25</td></tr><tr><td>Medium</td><td>15</td></tr><tr><td>Hard</td><td>10</td></tr><tr><td><b>Total</b></td><td><b>50</b></td></tr></tbody></table></section>
+<section id="s4"><h2>Quiz Bank</h2><div class="lv" id="ql"></div><div id="qz"></div><table class="qsum"><thead><tr><th>Level</th><th>Questions</th></tr></thead><tbody><tr><td>Easy</td><td>25</td></tr><tr><td>Medium</td><td>15</td></tr><tr><td>Hard</td><td>10</td></tr><tr><td><b>Total</b></td><td><b>50</b></td></tr></tbody></table></section>
+</main>
+
+<script>
+const $=s=>document.querySelector(s),E=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+// tabs
+const names=["Overview","Interactive Diagrams","Mini Map","Flash Cards","Quiz Bank"];
+const ICO={"Overview": "<svg viewBox='0 0 24 24'><path d='M6 3h9l4 4v14H6z'/><path d='M9 11h7M9 15h7M9 7h3'/></svg>", "Interactive Diagrams": "<svg viewBox='0 0 24 24'><path d='M4 4v16h16'/><path d='M8 16v-5M12 16V8M16 16v-3'/></svg>", "Mini Map": "<svg viewBox='0 0 24 24'><circle cx='5' cy='6' r='2'/><circle cx='19' cy='6' r='2'/><circle cx='5' cy='18' r='2'/><circle cx='19' cy='18' r='2'/><circle cx='12' cy='12' r='2'/><path d='M7 7l3.5 3.5M17 7l-3.5 3.5M7 17l3.5-3.5M17 17l-3.5-3.5'/></svg>", "Flash Cards": "<svg viewBox='0 0 24 24'><rect x='3' y='6' width='18' height='12' rx='2'/><path d='M6 3h12'/></svg>", "Quiz Bank": "<svg viewBox='0 0 24 24'><circle cx='12' cy='12' r='9'/><path d='M8 12.5l3 3 5-6'/></svg>"};names.forEach((n,i)=>{const b=E("button","",(ICO[n]||"")+"<span>"+n+"</span>");b.setAttribute("role","tab");b.onclick=()=>go(i);$("#nav").append(b)});
+function go(i){document.querySelectorAll("section").forEach((s,k)=>s.classList.toggle("on",k==i));document.querySelectorAll("nav button").forEach((b,k)=>b.setAttribute("aria-selected",k==i))}
+go(0);
+// ===== Interactive Diagrams (source: lecture only) =====
+const N=(i,l,k,d,c,x)=>({i,l,k,d,c:c||[],x:x||[]});
+const DG=[{"t":"Conduction of One Heartbeat","ty":"Flowchart","s":"f","p":"The path of the electrical impulse from the sinus node to the ventricles.","src":"Lecture 1 — How does the heart beat?; Slides 6–9","n":{"i":"hb","l":"Electrical conduction of one heartbeat","k":"m","d":"The heart's pumping action is regulated by an electrical conduction system that coordinates contraction of the chambers.","c":[{"i":"sn","l":"Sinus (SA) node","k":"s","d":"Small mass of specialized tissue in the upper right atrium; generates the impulse regularly, 60–100 times/min under normal conditions.","c":[],"x":["Called the heart's natural pacemaker","Each impulse generates one heartbeat"]},{"i":"at","l":"Atria depolarize","k":"s","d":"Impulse spreads across the right and left atria (atrial depolarization); both atria contract and push blood into the ventricles.","c":[],"x":["Generates the P wave on the EKG","Atria contract a fraction of a second before the ventricles"]},{"i":"av","l":"AV disc → AV node","k":"s","d":"The wave is stopped at the AV disc except at the AV node, where the impulse is slowed for a very short period.","c":[],"x":["Pause on the EKG = PR interval","Allows the atria to contract fully and empty into the ventricles"]},{"i":"hi","l":"Bundle of His","k":"s","d":"The AV node conducts the impulse to the His bundle.","c":[],"x":[]},{"i":"bb","l":"Right & left bundle branches","k":"s","d":"The His bundle divides into the right and left bundle branches, which stimulate the right and left ventricles.","c":[],"x":["The left bundle branch splits into the left anterior fascicle (LAF) and left posterior fascicle (LPF)"]},{"i":"vt","l":"Ventricles depolarize & contract","k":"s","d":"The impulse spreads through the right and left ventricles, causing them to contract.","c":[],"x":["Generates the QRS complex on the EKG","Each ventricular contraction = one heartbeat"]},{"i":"bl","l":"Blood pumped out","k":"r","d":"The left ventricle sends blood to the organs of the body; the right ventricle sends blood to the lungs.","c":[],"x":[]}],"x":[]},"c":[["sn","at","spreads to"],["at","av","reaches"],["av","hi","slowed, then conducts"],["hi","bb","divides into"],["bb","vt","stimulate"],["vt","bl","pump"]]},{"t":"Components of the Cardiac Conduction System","ty":"Structure diagram","p":"The conduction components and the chambers, valves and AV disc shown in the lecture figure.","src":"Lecture 1 — Components of the Cardiac Conduction System; Slide 8","n":{"i":"cs","l":"Cardiac conduction system","k":"m","d":"Electrical system that regulates the heart's pumping action and coordinates contraction of the chambers.","c":[{"i":"sn2","l":"Sinus node (SN)","k":"b","d":"In the upper right atrium; the heart's natural pacemaker.","c":[],"x":["Sets the heart rate and the sequence of conduction"]},{"i":"avs","l":"AV conduction system","k":"b","d":"Specialized system consisting of the AV node, the His bundle, and the right and left bundle branches.","c":[{"i":"avn","l":"AV node (AVN)","k":"s","d":"Conducts the impulse to the His bundle; slows the impulse briefly.","c":[],"x":[]},{"i":"his","l":"His bundle","k":"s","d":"Passes the signal to the right and left bundle branches.","c":[],"x":[]},{"i":"rbb","l":"Right bundle branch (RBB)","k":"s","d":"Sends the impulse to the right ventricle.","c":[],"x":[]},{"i":"lbb","l":"Left bundle branch (LBB)","k":"s","d":"Sends the impulse to the left ventricle; splits into two fascicles.","c":[{"i":"laf","l":"Left anterior fascicle (LAF)","k":"r","d":"","c":[],"x":[]},{"i":"lpf","l":"Left posterior fascicle (LPF)","k":"r","d":"","c":[],"x":[]}],"x":[]}],"x":[]},{"i":"rf","l":"Reference structures (figure)","k":"b","d":"Chambers, valves and fibrous tissue shown with the conduction system.","c":[{"i":"ch","l":"Chambers","k":"s","d":"Two atria (RA, LA) at the top and two ventricles (RV, LV) at the bottom.","c":[{"i":"ra","l":"Right atrium (RA)","k":"r","d":"","c":[],"x":[]},{"i":"la","l":"Left atrium (LA)","k":"r","d":"","c":[],"x":[]},{"i":"rv","l":"Right ventricle (RV)","k":"r","d":"","c":[],"x":[]},{"i":"lv","l":"Left ventricle (LV)","k":"r","d":"","c":[],"x":[]}],"x":[]},{"i":"adc","l":"AV disc","k":"s","d":"Layer of fibrous tissue separating the atria from the ventricles; it keeps the electrical signal passing through the AV node.","c":[],"x":[]},{"i":"tv","l":"Tricuspid valve (TV)","k":"s","d":"Separates the right atrium from the right ventricle.","c":[],"x":[]},{"i":"mv","l":"Mitral valve (MV)","k":"s","d":"Separates the left atrium from the left ventricle.","c":[],"x":[]}],"x":[]}],"x":[]},"c":[]},{"t":"Electrical Events and EKG Correlates","ty":"Cause and effect","p":"Which electrical event produces which EKG feature, and what it does mechanically.","src":"Lecture 1 — Slides 6, 7 and 9","n":{"i":"ek","l":"Heart's electrical signal → EKG","k":"m","d":"The EKG records the electrical signal as it moves through the heart.","c":[{"i":"ad","l":"Atrial depolarization","k":"b","d":"Impulse from the sinus node spreads across both atria.","c":[{"i":"pw","l":"P wave","k":"r","d":"Generated as the impulse passes through the atria.","c":[],"x":[]},{"i":"ac","l":"Atria contract","k":"r","d":"Pushes blood into the right and left ventricles.","c":[],"x":[]}],"x":[]},{"i":"an","l":"Slow conduction through AV node","k":"b","d":"At the AV disc the impulse is stopped except in the AV node, where it travels at a slow, controlled rate.","c":[{"i":"pr","l":"PR interval","k":"r","d":"Pause in electrical activity on the EKG.","c":[],"x":[]},{"i":"ae","l":"Atria empty fully","k":"r","d":"The pause allows the atria to contract fully and empty blood into the ventricles before the ventricles begin to contract.","c":[],"x":[]}],"x":[]},{"i":"vd","l":"Ventricular depolarization","k":"b","d":"Impulse spreads throughout the right and left ventricles.","c":[{"i":"qrs","l":"QRS complex","k":"r","d":"Generated as the signal travels through the ventricles.","c":[],"x":[]},{"i":"vc","l":"Ventricles contract","k":"r","d":"Blood goes to the body via the left ventricle and to the lungs via the right ventricle.","c":[],"x":[]}],"x":[]}],"x":[]},"c":[["ad","pw","generates"],["ad","ac","causes"],["an","pr","shown as"],["an","ae","allows"],["vd","qrs","generates"],["vd","vc","causes"]]},{"t":"Types of Cardiac Action Potential","ty":"Classification tree","p":"Non-nodal (fast response) versus nodal (slow response) action potentials.","src":"Lecture 2 — Non-nodal and Nodal Cell Action Potentials","n":{"i":"ap","l":"Cardiac action potentials","k":"m","d":"Determined by the movement of ions (ion currents) into and out of the cell; changes in membrane conductance (g) alter membrane potential.","c":[{"i":"nn","l":"Non-nodal (fast response)","k":"b","d":"Characteristic of atrial and ventricular myocytes and the fast-conducting Purkinje system.","c":[{"i":"nl","l":"Found in","k":"s","d":"","c":[{"i":"my","l":"Atrial & ventricular myocytes","k":"r","d":"","c":[],"x":[]},{"i":"pk","l":"Purkinje system (ventricles)","k":"r","d":"Fast-conducting.","c":[],"x":[]}],"x":[]},{"i":"nf","l":"Distinguishing features","k":"s","d":"","c":[{"i":"rp","l":"True resting potential (phase 4)","k":"r","d":"","c":[],"x":[]},{"i":"fd","l":"Fast depolarization (phase 0)","k":"r","d":"","c":[],"x":[]},{"i":"pp","l":"Prolonged plateau (phase 2)","k":"r","d":"","c":[],"x":[]}],"x":[]}],"x":[]},{"i":"nd","l":"Nodal (slow response)","k":"b","d":"Characteristic of the sinoatrial node and the atrioventricular (AV) node.","c":[{"i":"dl","l":"Found in","k":"s","d":"","c":[{"i":"sa","l":"Sinoatrial (SA) node","k":"r","d":"","c":[],"x":[]},{"i":"av2","l":"AV node","k":"r","d":"","c":[],"x":[]}],"x":[]},{"i":"df","l":"Distinguishing features","k":"s","d":"","c":[{"i":"au","l":"Automaticity (pacemaker activity)","k":"r","d":"Spontaneous depolarization.","c":[],"x":[]},{"i":"sd","l":"Less rapid depolarization","k":"r","d":"Shorter action potential duration than non-nodal cells.","c":[],"x":[]},{"i":"np","l":"No phase 1 or phase 2","k":"w","d":"Only phases 0, 3 and 4 are present.","c":[],"x":[]}],"x":[]}],"x":[]}],"x":[]},"c":[["nn","nd","contrast"]]},{"t":"Non-nodal Action Potential: Phases 0–4","ty":"Flowchart","s":"f","p":"Ion conductance changes in each phase of the fast response action potential.","src":"Lecture 2 — Non-nodal Cell Action Potentials; Action potential phases","n":{"i":"nnp","l":"Non-nodal (fast response) action potential","k":"m","d":"Atrial and ventricular myocytes and Purkinje fibres. Conductance (g) changes to Na+, K+ and Ca++ shape each phase.","c":[{"i":"p0","l":"Phase 0 — Rapid depolarization","k":"s","d":"↑ Na+ and ↓ K+ conductance","c":[],"x":["Sodium-channel blockers decrease this slope"]},{"i":"p1","l":"Phase 1 — Initial repolarization","k":"s","d":"↓ Na+ and ↑ K+ conductance","c":[],"x":[]},{"i":"p2","l":"Phase 2 — Plateau","k":"s","d":"↑ Ca++ conductance","c":[],"x":["Prolonged plateau distinguishes fast from slow response"]},{"i":"p3","l":"Phase 3 — Repolarization","k":"s","d":"↑ K+ and ↓ Ca++ conductance","c":[],"x":["Potassium-channel blockers delay and prolong this phase"]},{"i":"p4","l":"Phase 4 — Resting potential","k":"r","d":"↑ K+ and ↓ Na+ and ↓ Ca++ conductance","c":[],"x":["True resting potential"]}],"x":[]},"c":[["p0","p1","then"],["p1","p2","then"],["p2","p3","then"],["p3","p4","returns to"]]},{"t":"Nodal Action Potential: Phases 4, 0, 3","ty":"Flowchart","s":"f","p":"Pacemaker cell cycle: spontaneous depolarization, depolarization, repolarization.","src":"Lecture 2 — Nodal Cell Action Potentials; Action potential phases","n":{"i":"ndp","l":"Nodal (slow response) action potential","k":"m","d":"SA and AV nodes. Automaticity: spontaneous depolarization. No phase 1 or phase 2.","c":[{"i":"q4","l":"Phase 4 — Spontaneous depolarization","k":"s","d":"“Funny” currents (If) through slow inward Na+ channels; ↑ Ca++ and ↓ K+ conductance","c":[],"x":["Calcium-channel blockers reduce the slope of this phase, lowering the pacemaker firing rate"]},{"i":"q0","l":"Phase 0 — Depolarization","k":"s","d":"↑ Ca++ and ↓ K+ conductance","c":[],"x":["Calcium-channel blockers also reduce this slope, slowing AV-node conduction velocity"]},{"i":"q3","l":"Phase 3 — Repolarization","k":"r","d":"↑ K+ and ↓ Ca++ conductance","c":[],"x":["Potassium-channel blockers delay this phase"]}],"x":[]},"c":[["q4","q0","reaches threshold"],["q0","q3","then"],["q3","q4","next cycle"]]},{"t":"Antiarrhythmic Drugs and Action Potentials","ty":"Cause and effect","p":"How blocking each ion channel changes the action potential.","src":"Lecture 2 — Slide 4 (non-nodal) and Slide 6 (nodal)","n":{"i":"ad2","l":"Antiarrhythmic drugs","k":"m","d":"Drugs that block or facilitate movement of ions to alter cardiac action potentials in order to prevent or stop arrhythmias.","c":[{"i":"na","l":"Sodium-channel blockers (non-nodal)","k":"b","d":"Decrease the fast inward movement of Na+.","c":[{"i":"n0","l":"↓ Slope of phase 0 & magnitude of depolarization","k":"s","d":"","c":[{"i":"cv","l":"↓ Conduction velocity","k":"r","d":"The principal effect of this change.","c":[],"x":[]}],"x":[]},{"i":"ne","l":"↑ ERP","k":"r","d":"By delaying reactivation of fast-sodium channels.","c":[],"x":[]}],"x":[]},{"i":"kb","l":"Potassium-channel blockers","k":"b","d":"Stated for non-nodal tissue and for nodal (slow response) tissue.","c":[{"i":"k3","l":"Delay onset & prolong phase 3","k":"s","d":"","c":[{"i":"kd","l":"↑ Action potential duration","k":"r","d":"","c":[],"x":[]},{"i":"ke","l":"↑ ERP","k":"r","d":"","c":[],"x":[]}],"x":[]}],"x":[]},{"i":"cb","l":"Calcium-channel blockers (nodal)","k":"b","d":"Act on slow response action potentials of the SA and AV nodes.","c":[{"i":"c4","l":"↓ Slope of phase 4","k":"s","d":"Decreases the rate of spontaneous depolarization.","c":[{"i":"cp","l":"↓ Pacemaker firing rate","k":"r","d":"","c":[],"x":[]}],"x":[]},{"i":"c0","l":"↓ Slope of phase 0","k":"s","d":"","c":[{"i":"cn","l":"↓ AV-node conduction velocity","k":"r","d":"","c":[],"x":[]}],"x":[]},{"i":"ce","l":"↑ AV nodal ERP","k":"r","d":"","c":[],"x":[]}],"x":[]}],"x":[]},"c":[["na","n0","blocks"],["n0","cv","principal effect"],["na","ne","also"],["kb","k3","delays"],["cb","c4","reduces"],["cb","c0","reduces"],["cb","ce","lengthens"]]}];
+function buildDg(dg,idx){
+ const KC={m:"#7a1527",b:"#c8452f",s:"#b03a6a",r:"#2e6b3b",w:"#b7791f"};
+ const KN={m:"Main concept",b:"Branch / group",s:"Stage / event",r:"Item / outcome",w:"Key caution"};
+ const spine=!!dg.s,tl=dg.s=="t",root=dg.n,flat=spine&&dg.n.c.every(c=>!c.c.length);
+ const all={},par={};
+ const walk=(n,p)=>{all[n.i]=n;par[n.i]=p;n.c.forEach(c=>walk(c,n.i))};walk(root,null);
+ const ids=Object.keys(all);
+ const lm={};dg.c.forEach(c=>lm[c[0]+">"+c[1]]=c[2]);
+ const col=new Set();
+ let sel=null,z=1,W=0,H=0,pos={},meas={},cfg=null,mode=null,first=true;
+ const T=(tag,cls,txt)=>{const e=E(tag,cls);if(txt!=null)e.textContent=txt;return e};
+
+ // ---------- shell ----------
+ const card=E("div","card dgx");
+ const hd=E("div","dx-h");
+ hd.append(T("span","dx-no",String(idx+1)));
+ const ht=E("div","dx-ht");ht.append(T("h3","",dg.t),T("p","dx-p",dg.p));
+ hd.append(ht,T("span","dx-bg",dg.ty));
+ const srcL=E("p","dx-s");srcL.append(T("b","","Source: "),document.createTextNode(dg.src+" · "+ids.length+" nodes"));
+ const bar=E("div","dx-bar");
+ const st=E("div","dx-st"),wrap=E("div","dx-wrap"),cv=E("div","dx-cv"+(tl?" dxtl":"")),svg=E("div","dx-svg"),pl=E("div","dx-pl");
+ cv.append(svg,pl);wrap.append(cv);st.append(wrap);
+ const dt=E("div","dx-dt");
+ const hint=()=>{dt.innerHTML="";dt.style.setProperty("--c","#7a1527");dt.append(T("p","dx-hint","Tap any node to read its explanation, its place in the diagram and its relationships."))};
+ hint();
+ card.append(hd,srcL,bar,st,dt);
+
+ // ---------- nodes ----------
+ const nodeEl={};
+ const stepNo=n=>spine&&par[n.i]===root.i?root.c.indexOf(n)+1:0;
+ ids.forEach(i=>{
+  const n=all[i],isRoot=n===root,ban=isRoot&&spine;
+  const d=E("div","dx-nd k-"+n.k+(isRoot?" root":"")+(ban?" ban":""));
+  d.setAttribute("role","button");d.tabIndex=0;d.dataset.i=i;
+  const s=stepNo(n);
+  if(s){d.classList.add("stp");d.append(T("i","dx-bd",tl?"":String(s)))}
+  if(ban){d.append(T("span","dx-tag",tl?"Timeline":"Process flow"))}
+  d.append(T("span","dx-lb",n.l));
+  if(ban&&n.d)d.append(T("span","dx-ds",n.d));
+  if(flat&&s&&n.d)d.append(T("span","dx-sub",n.d));
+  if(n.c.length&&!ban){
+   const t=E("button","dx-tg");t.type="button";t.onclick=e=>{e.stopPropagation();col.has(i)?col.delete(i):col.add(i);layout();applySel()};
+   d.append(t);
+  }
+  d.onclick=()=>pick(i);
+  d.onkeydown=e=>{if(e.key=="Enter"||e.key==" "){e.preventDefault();pick(i)}};
+  cv.append(d);nodeEl[i]=d;
+ });
+
+ // ---------- layout ----------
+ function measure(){
+  const w=st.clientWidth,nr=w<600;
+  cfg={nw:flat?Math.min(nr?w-70:520,520):(nr?172:222),cg:nr?46:86,vg:nr?12:24,sg:nr?40:50,P:18};
+  cv.style.setProperty("--nw",cfg.nw+"px");
+  ids.forEach(i=>{const e=nodeEl[i];e.style.display="";meas[i]=e.offsetHeight});
+ }
+ function layout(){
+  const {nw:NW,cg:CG,vg:VG,sg:SG,P}=cfg;
+  const shown=new Set();
+  const mark=n=>{shown.add(n.i);if(!col.has(n.i))n.c.forEach(mark)};mark(root);
+  ids.forEach(i=>{const e=nodeEl[i];e.style.display=shown.has(i)?"":"none";
+   const n=all[i];const t=e.querySelector(".dx-tg");if(t){const c=col.has(i);t.textContent=c?"+"+n.c.length:"−";t.setAttribute("aria-label",(c?"Expand ":"Collapse ")+n.l);t.setAttribute("aria-expanded",!c)}
+   e.style.setProperty("--c",KC[n.k])});
+  const kids=n=>col.has(n.i)?[]:n.c;
+  const gap=n=>(spine&&n===root)?SG:VG;
+  const sub=n=>{const k=kids(n);if(!k.length)return meas[n.i];let s=0;k.forEach((c,i)=>s+=sub(c)+(i?gap(n):0));return Math.max(meas[n.i],s)};
+  pos={};
+  const put=(n,x,y)=>{const sh=sub(n),k=kids(n),h=meas[n.i];pos[n.i]={x,y:y+(sh-h)/2,w:NW,h};let tot=0;k.forEach((c,i)=>tot+=sub(c)+(i?gap(n):0));let cy=y+(sh-tot)/2;k.forEach(c=>{put(c,x+NW+CG,cy);cy+=sub(c)+gap(n)})};
+  if(spine){
+   let y=0;root.c.forEach(c=>{put(c,P,y);y+=sub(c)+SG});
+   let mx=0;Object.values(pos).forEach(p=>mx=Math.max(mx,p.x+p.w));
+   const bw=Math.max(mx-P,flat?NW:NW*1.7+CG);
+   const be=nodeEl[root.i];be.style.width=bw+"px";const bh=be.offsetHeight;
+   const off=P+bh+34;Object.values(pos).forEach(p=>p.y+=off);
+   pos[root.i]={x:P,y:P,w:bw,h:bh};
+  }else put(root,P,P);
+  let mx=0,my=0;Object.values(pos).forEach(p=>{mx=Math.max(mx,p.x+p.w);my=Math.max(my,p.y+p.h)});
+  W=mx+P+44;H=my+P;
+  ids.forEach(i=>{const p=pos[i];if(p){const e=nodeEl[i];e.style.left=p.x+"px";e.style.top=p.y+"px"}});
+  cv.style.width=W+"px";cv.style.height=H+"px";
+  edges(shown,kids);applyZoom();
+ }
+
+ // ---------- edges ----------
+ function edges(shown,kids){
+  const uid="dx"+idx;
+  let need=0;let s=`<defs>`;
+  [["n","#7a1527"],["x","#c8452f"]].forEach(([k,c])=>s+=`<marker id="${uid}${k}" viewBox="0 0 10 10" refX="8.5" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="${c}"/></marker>`);
+  s+=`</defs>`;
+  let pills="";
+  const pill=(x,y,t,cls,la,lb)=>{if(t&&cls==="r")need=Math.max(need,x+14+t.length*6.4+24);if(t&&cls==="lk")need=Math.max(need,x+t.length*3.2+20);if(t)pills+=`<span class="dx-pill ${cls||""}"${la?` data-a="${la}" data-b="${lb}"`:""} style="left:${x}px;top:${y}px">${t.replace(/&/g,"&amp;").replace(/</g,"&lt;")}</span>`};
+  const hz=(x1,y1,x2,y2)=>{const dx=Math.max(26,Math.abs(x2-x1)*.5)*(x2>=x1?1:-1);return `M${x1} ${y1}C${x1+dx} ${y1} ${x2-dx} ${y2} ${x2} ${y2}`};
+  const path=(d,a,b,cls,col_,w,mk,ms)=>s+=`<path class="e ${cls}" data-a="${a}" data-b="${b}" d="${d}" stroke="${col_}" stroke-width="${w}"${mk?` marker-end="url(#${uid}${mk})"`:""}${ms?` marker-start="url(#${uid}${ms})"`:""}/>`;
+  const isEdge=(a,b)=>par[a]===b||par[b]===a;
+  // tree edges
+  ids.forEach(i=>{const n=all[i];if(!shown.has(i))return;
+   if(spine&&n===root)return;
+   kids(n).forEach(c=>{
+    const A=pos[n.i],B=pos[c.i];
+    const x1=A.x+A.w,y1=A.y+A.h/2,x2=B.x,y2=B.y+B.h/2;
+    const fw=lm[n.i+">"+c.i],bk=lm[c.i+">"+n.i];
+    if(bk){path(hz(x2,y2,x1,y1),n.i,c.i,"t",KC[c.k],2,"n")}
+    else path(hz(x1,y1,x2,y2),n.i,c.i,"t",KC[c.k],2,fw?"n":"");
+    pill((x1+x2)/2,(y1+y2)/2,fw||bk);
+   });
+  });
+  // spine rail
+  if(spine){
+   const R=root.c,rx=p=>p.x+26;
+   const b=pos[root.i];
+   if(R.length){const f=pos[R[0].i];path(`M${rx(f)} ${b.y+b.h}L${rx(f)} ${f.y}`,root.i,R[0].i,"rl","#7a1527",3)}
+   for(let k=1;k<R.length;k++){
+    const a=pos[R[k-1].i],c=pos[R[k].i],x=rx(a),y1=a.y+a.h,y2=c.y,lab=lm[R[k-1].i+">"+R[k].i];
+    path(`M${x} ${y1}L${x} ${y2}`,R[k-1].i,R[k].i,"rl","#7a1527",3,tl?"":"n");
+    pill(x,(y1+y2)/2,lab,"r");
+   }
+  }
+  // cross links
+  let cc=0;const colMap={};
+  Object.keys(pos).forEach(i=>{if(shown.has(i)){(colMap[pos[i].x]=colMap[pos[i].x]||[]).push(i)}});
+  Object.values(colMap).forEach(a=>a.sort((p,q)=>pos[p].y-pos[q].y));
+  dg.c.forEach(([a,b,lab])=>{
+   if(!shown.has(a)||!shown.has(b)||isEdge(a,b))return;
+   if(spine&&par[a]===root.i&&par[b]===root.i&&root.c.findIndex(x=>x.i===b)-root.c.findIndex(x=>x.i===a)===1)return;
+   const A=pos[a],B=pos[b],dbl=/contrast/i.test(lab),mk=dbl?"x":"x",ms=dbl?"x":"";
+   if(A.x===B.x){
+    const arr=colMap[A.x],d=Math.abs(arr.indexOf(a)-arr.indexOf(b));
+    if(d===1){
+     const x=A.x+A.w/2,dn=A.y<B.y,y1=dn?A.y+A.h:A.y,y2=dn?B.y:B.y+B.h;
+     path(`M${x} ${y1}L${x} ${y2}`,a,b,"x",KC.b,2,mk,ms);pill(x,(y1+y2)/2,lab);return;
+    }
+    const k=cc++,X=A.x+A.w+32+(k%3)*16,x1=A.x+A.w,up=A.y<B.y;
+    const o1=Math.min(16,A.h/2-5),o2=Math.min(16,B.h/2-5);
+    const y1=A.y+A.h/2+(up?o1:-o1),y2=B.y+B.h/2+(up?-o2:o2);
+    path(`M${x1} ${y1}C${X} ${y1} ${X} ${y2} ${x1} ${y2}`,a,b,"x lk",KC.b,2,mk,ms);
+    pill(x1+.75*(X-x1),(y1+y2)/2,lab,"lk",a,b);return;
+   }
+   const right=B.x>A.x,x1=right?A.x+A.w:A.x,x2=right?B.x:B.x+B.w,y1=A.y+A.h/2,y2=B.y+B.h/2;
+   path(hz(x1,y1,x2,y2),a,b,"x",KC.b,2,mk,ms);pill((x1+x2)/2,(y1+y2)/2,lab);
+  });
+  W=Math.max(W,need+cfg.P);cv.style.width=W+"px";
+  svg.innerHTML=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`+s+"</svg>";pl.innerHTML=pills;
+ }
+
+ // ---------- selection / details ----------
+ function related(id){
+  const r=new Set();const n=all[id];
+  if(par[id]!=null)r.add(par[id]);n.c.forEach(c=>r.add(c.i));
+  dg.c.forEach(c=>{if(c[0]===id)r.add(c[1]);if(c[1]===id)r.add(c[0])});
+  return r;
+ }
+ function applySel(){
+  const r=sel?related(sel):new Set();
+  ids.forEach(i=>{nodeEl[i].classList.toggle("on",i===sel);nodeEl[i].classList.toggle("rel",r.has(i))});
+  cv.classList.toggle("hs",!!sel);
+  svg.querySelectorAll("path.e").forEach(p=>p.classList.toggle("hi",!!sel&&(p.dataset.a===sel||p.dataset.b===sel)));
+  pl.querySelectorAll(".lk").forEach(p=>p.classList.toggle("hi",!!sel&&(p.dataset.a===sel||p.dataset.b===sel)));
+ }
+ function chip(id,pre,suf){
+  const b=E("button","dx-ch");b.type="button";b.style.setProperty("--c",KC[all[id].k]);
+  b.append(T("i","",""),document.createTextNode((pre||"")+all[id].l+(suf?" · "+suf:"")));
+  b.onclick=()=>goTo(id);return b;
+ }
+ function goTo(id){
+  let p=par[id];let ch=false;while(p!=null){if(col.delete(p))ch=true;p=par[p]}
+  if(ch)layout();pick(id,true);
+ }
+ function pick(id,scroll){
+  sel=id;applySel();
+  const n=all[id];dt.innerHTML="";dt.style.setProperty("--c",KC[n.k]);
+  const top=E("div","dx-dk");top.append(T("i",""),document.createTextNode(KN[n.k]));
+  const path=[];let p=id;while(p!=null){path.unshift(all[p].l);p=par[p]}
+  dt.append(top);
+  if(path.length>1)dt.append(T("div","dx-pa",path.join("  ›  ")));
+  dt.append(T("h4","",n.l));
+  if(n.d)dt.append(T("p","",n.d));
+  if(n.x.length){const u=E("ul");n.x.forEach(x=>u.append(T("li","",x)));dt.append(u)}
+  if(n.c.length){const g=E("div","dx-g");g.append(T("small","","Contains"));n.c.forEach(c=>g.append(chip(c.i)));dt.append(g)}
+  const rs=dg.c.filter(c=>c[0]===id||c[1]===id);
+  if(rs.length){const g=E("div","dx-g");g.append(T("small","","Relationships"));rs.forEach(c=>{const o=c[0]===id?c[1]:c[0];g.append(chip(o,c[0]===id?"→ ":"← ",c[2]))});dt.append(g)}
+  if(scroll&&pos[id]){const q=pos[id];st.scrollTo({left:Math.max(0,q.x*z-(st.clientWidth-q.w*z)/2),top:Math.max(0,q.y*z-(st.clientHeight-q.h*z)/2),behavior:"smooth"})}
+ }
+
+ // ---------- zoom & toolbar ----------
+ function applyZoom(){cv.style.transform="scale("+z+")";wrap.style.width=(W*z)+"px";wrap.style.height=(H*z)+"px"}
+ const fit=()=>{z=Math.max(.45,Math.min(1,(st.clientWidth-10)/W));applyZoom()};
+ const bt=(t,f,tip)=>{const b=E("button","dx-bt",t);b.type="button";if(tip)b.title=tip;b.onclick=f;bar.append(b);return b};
+ bt("Expand all",()=>{col.clear();layout();applySel()});
+ bt("Collapse all",()=>{ids.forEach(i=>{if(all[i].c.length&&all[i]!==root)col.add(i)});layout();applySel()});
+ bt("−",()=>{z=Math.max(.45,+(z-.1).toFixed(2));applyZoom()},"Zoom out");
+ bt("+",()=>{z=Math.min(1.6,+(z+.1).toFixed(2));applyZoom()},"Zoom in");
+ bt("Fit",fit,"Fit to width");
+ bt("Reset",()=>{sel=null;col.clear();layout();fit();applySel();hint();st.scrollTo(0,0)},"Reset view");
+ if(card.requestFullscreen)bt("Full screen",()=>{document.fullscreenElement===card?document.exitFullscreen():card.requestFullscreen().catch(()=>{})});
+
+ // layout needs a visible element to measure, so wait until the tab is shown
+ const start=()=>{const w=st.clientWidth;if(!w)return;const m=w<600?"n":"w";if(m===mode)return;mode=m;measure();layout();applySel();first=false;z=Math.max(.72,Math.min(1,(st.clientWidth-10)/W));applyZoom()};
+ new ResizeObserver(()=>requestAnimationFrame(start)).observe(st);
+ return card;
+}
+DG.forEach((d,i)=>$("#dgs").append(buildDg(d,i)));
+
+// mini map (hierarchical, collapsible)
+const T=(a,d,r,k)=>({a,d,r,k:k||[]});
+const MM={"a":"Cardiac Electrophysiology — Lectures 1–2","d":"Lecture 1: heart's electrical system · Lecture 2: cardiac action potentials","r":"","k":[{"a":"Heart's Electrical System (Lecture 1)","d":"Electrical conduction system coordinates contraction of the chambers","r":"includes","k":[{"a":"Heart as a pump","d":"","r":"","k":[{"a":"Muscle tissue","d":"Needs a source of energy and oxygen, like all muscle","r":"","k":[]},{"a":"Pumping action","d":"Regulated by an electrical conduction system that coordinates contraction of the chambers","r":"","k":[]}]},{"a":"Sinus (SA) node","d":"Small mass of specialized tissue; the heart's natural pacemaker","r":"generates impulse","k":[{"a":"Location","d":"Upper portion of the right atrium","r":"","k":[]},{"a":"Rate","d":"60–100 impulses/min under normal conditions; each impulse = one heartbeat","r":"","k":[]},{"a":"Controls heart rate","d":"Number of impulses determines the rate (normal sinus rhythm 60–100/min)","r":"","k":[]},{"a":"Controls conduction","d":"Muscle cells contract in the correct sequence → regular, efficient, coordinated beats","r":"","k":[]}]},{"a":"Conduction pathway","d":"Sinus node → atria → AV node → His bundle → bundle branches → ventricles","r":"consists of","k":[{"a":"Atria","d":"Atrial depolarization; both atria contract and push blood into the ventricles","r":"","k":[{"a":"Timing","d":"Stimulated and contract a fraction of a second before the ventricles","r":"","k":[]}]},{"a":"AV disc & AV node","d":"AV disc (fibrous tissue) stops the wave except at the AV node","r":"","k":[{"a":"AV node","d":"Impulse is slowed for a very short period at a slow, controlled rate","r":"","k":[]}]},{"a":"His bundle","d":"Receives the impulse from the AV node and passes it to the bundle branches","r":"","k":[]},{"a":"Bundle branches","d":"Right (RBB) and left (LBB); stimulate the right and left ventricles","r":"","k":[{"a":"Right bundle branch (RBB)","d":"To the right ventricle","r":"","k":[]},{"a":"Left bundle branch (LBB)","d":"To the left ventricle; splits into LAF and LPF","r":"","k":[{"a":"Left anterior fascicle (LAF)","d":"","r":"","k":[]},{"a":"Left posterior fascicle (LPF)","d":"","r":"","k":[]}]}]},{"a":"Ventricles","d":"Impulse spreads through both ventricles → they contract","r":"","k":[{"a":"Each ventricular contraction","d":"= one heartbeat","r":"","k":[]},{"a":"Left ventricle","d":"Sends blood to the organs of the body","r":"","k":[]},{"a":"Right ventricle","d":"Sends blood to the lungs","r":"","k":[]}]}]},{"a":"EKG correlates","d":"","r":"associated with","k":[{"a":"P wave","d":"Atrial depolarization (impulse passing through the atria)","r":"","k":[]},{"a":"PR interval","d":"Pause while the impulse crosses the AV node; lets atria empty fully before ventricles contract","r":"","k":[]},{"a":"QRS complex","d":"Impulse spreading through the ventricles","r":"","k":[]}]},{"a":"Chambers & valves (figure)","d":"","r":"labelled in","k":[{"a":"Chambers","d":"RA, LA (atria) · RV, LV (ventricles)","r":"","k":[]},{"a":"Tricuspid valve (TV)","d":"Separates the right atrium from the right ventricle","r":"","k":[]},{"a":"Mitral valve (MV)","d":"Separates the left atrium from the left ventricle","r":"","k":[]},{"a":"SN / AVN","d":"Sinus node / AV node","r":"","k":[]}]}]},{"a":"Cardiac Action Potentials (Lecture 2)","d":"Determined by ion currents; changes in membrane conductance (g) alter membrane potential","r":"includes","k":[{"a":"Non-nodal (fast response)","d":"Atrial & ventricular myocytes; fast-conducting Purkinje system","r":"classified into","k":[{"a":"Distinguishing features","d":"","r":"","k":[{"a":"True resting potential","d":"Phase 4","r":"","k":[]},{"a":"Fast depolarization","d":"Phase 0","r":"","k":[]},{"a":"Prolonged plateau","d":"Phase 2","r":"","k":[]}]},{"a":"Phases","d":"","r":"consists of","k":[{"a":"Phase 0 — Rapid depolarization","d":"↑ Na+ and ↓ K+ conductance","r":"","k":[]},{"a":"Phase 1 — Initial repolarization","d":"↓ Na+ and ↑ K+ conductance","r":"","k":[]},{"a":"Phase 2 — Plateau","d":"↑ Ca++ conductance","r":"","k":[]},{"a":"Phase 3 — Repolarization","d":"↑ K+ and ↓ Ca++ conductance","r":"","k":[]},{"a":"Phase 4 — Resting potential","d":"↑ K+ and ↓ Na+ and ↓ Ca++ conductance","r":"","k":[]}]}]},{"a":"Nodal (slow response)","d":"Sinoatrial (SA) node and AV node","r":"classified into","k":[{"a":"Distinguishing features","d":"","r":"","k":[{"a":"Automaticity","d":"Pacemaker activity; spontaneous depolarization","r":"","k":[]},{"a":"Slower depolarization","d":"Less rapid; shorter action potential duration than fast response","r":"","k":[]},{"a":"No phase 1 or phase 2","d":"","r":"","k":[]}]},{"a":"Phases","d":"","r":"consists of","k":[{"a":"Phase 0 — Depolarization","d":"↑ Ca++ and ↓ K+ conductance","r":"","k":[]},{"a":"Phase 3 — Repolarization","d":"↑ K+ and ↓ Ca++ conductance","r":"","k":[]},{"a":"Phase 4 — Spontaneous depolarization","d":"“Funny” currents (If) through slow inward Na+ channels; ↑ Ca++ and ↓ K+ conductance","r":"","k":[]}]}]},{"a":"Antiarrhythmic drugs","d":"Block or facilitate ion movement to prevent or stop arrhythmias","r":"altered by","k":[{"a":"Sodium-channel blockers (non-nodal)","d":"↓ fast inward Na+","r":"","k":[{"a":"↓ Slope of phase 0","d":"And magnitude of depolarization","r":"","k":[]},{"a":"↓ Conduction velocity","d":"Principal effect","r":"","k":[]},{"a":"↑ ERP","d":"Delayed reactivation of fast-sodium channels","r":"","k":[]}]},{"a":"Potassium-channel blockers","d":"Non-nodal and nodal tissue","r":"","k":[{"a":"Delay onset & prolong phase 3","d":"","r":"","k":[]},{"a":"↑ Action potential duration and ERP","d":"","r":"","k":[]}]},{"a":"Calcium-channel blockers (nodal)","d":"","r":"","k":[{"a":"↓ Slope of phase 4","d":"↓ rate of spontaneous depolarization → ↓ pacemaker firing","r":"","k":[]},{"a":"↓ Slope of phase 0","d":"Slows conduction velocity in the AV node","r":"","k":[]},{"a":"↑ AV nodal ERP","d":"","r":"","k":[]}]}]}]}]};
+function mk(n,lv){const li=document.createElement("li");li.className="l"+lv+(n.k.length?"":" lf");const b=E("button","nb"+(lv<3?" p":""));b.innerHTML=(n.k.length?'<span class="ar">▸</span>':'<span class="ar">•</span>')+"<span>"+n.a+"</span>"+(n.r?'<span class="rel">'+n.r+"</span>":"");li.append(b);if(n.d)li.append(E("div","dt",n.d));if(n.k.length){const u=document.createElement("ul");n.k.forEach(c=>u.append(mk(c,lv+1)));li.append(u);b.onclick=()=>li.classList.toggle("open")}return li}
+const mu=document.createElement("ul");const mr=mk(MM,1);mr.classList.add("open");mu.append(mr);$("#mm").append(mu);
+const setAll=o=>$("#mm").querySelectorAll("li").forEach(x=>{if(x.querySelector(":scope>ul"))x.classList.toggle("open",o||x.classList.contains("l1"))});
+$("#mxa").onclick=()=>setAll(true);$("#mca").onclick=()=>setAll(false);
+[["Sinus node impulse","leads to","Atrial depolarization (P wave); atria contract"],["AV node (slow conduction)","results in","PR interval pause; atria empty into ventricles first"],["AV node → His bundle → bundle branches","occurs before","Ventricular depolarization (QRS) and contraction"],["Left ventricle / right ventricle","pump blood to","Body / lungs"],["Non-nodal action potential","differs from","Nodal: true resting potential, plateau and phases 0–4 vs automaticity and no phase 1 or 2"],["Phase 4 of nodal cells","associated with","“Funny” currents (If) and spontaneous depolarization"],["Na+-channel blockers","decrease","Phase 0 slope → ↓ conduction velocity; ↑ ERP"],["K+-channel blockers","delay","Phase 3 → ↑ action potential duration and ERP"],["Ca++-channel blockers","reduce","Phase 4 slope (↓ pacemaker rate) and phase 0 slope (↓ AV conduction); ↑ AV nodal ERP"]].forEach(r=>$("#mr").append(E("div","","<b>"+r[0]+"</b> <i>→ "+r[1]+" →</i> "+r[2])));
+// levels
+const LV=[["Level 1","Easy"],["Level 2","Medium"],["Level 3","Hard"]];
+const F=[[["In the simplest terms, what is the heart?", "A pump made up of muscle tissue.", "Like all muscle, the heart needs a source of energy and oxygen to function (Lecture 1).", 1], ["What regulates the heart's pumping action?", "An electrical conduction system that coordinates the contraction of the various chambers of the heart.", "The electrical system times the chambers' contractions (Lecture 1).", 2], ["What is another name for the sinus node?", "The sinoatrial node (SA node).", "Sinus node = SA node (Lecture 1).", 3], ["Where is the sinus node located?", "In the upper portion of the right atrium (the right upper chamber).", "It is a small mass of specialized tissue there (Lecture 1).", 4], ["At what rate does the sinus node normally generate electrical impulses?", "60 to 100 times per minute under normal conditions.", "This is the normal sinus rhythm range (Lecture 1).", 5], ["Why is the sinus node called the heart's \"natural pacemaker\"?", "Because the heart generates its own electrical signal in the sinus node, and this signal controls the heart rate and the sequence of contraction.", "The sinus node sets the rate and spreads the signal across the heart (Lecture 1).", 6], ["Which chambers are stimulated and contract first: the atria or the ventricles?", "The atria (the 2 upper chambers), which contract a short time before the ventricles (the 2 lower chambers).", "The atria contract a fraction of a second before the ventricles (Lecture 1).", 7], ["What happens to the electrical impulse at the AV node?", "It is slowed down for a very short period.", "The AV node = atrioventricular node (Lecture 1).", 8], ["After the AV node, through which structure does the impulse continue into the ventricles?", "The bundle of His.", "Path: AV node → bundle of His → ventricles (Lecture 1).", 9], ["Into what does the bundle of His divide?", "The right and left bundle branches, which stimulate the right and left ventricles respectively.", "The branches carry the impulse to each ventricle (Lecture 1).", 10], ["What does each contraction of the ventricles represent?", "One heartbeat.", "Each ventricular contraction = one heartbeat (Lecture 1).", 11], ["What is the AV disc?", "A layer of fibrous tissue separating the atria from the ventricles. It keeps the electrical signal passing through the AV node.", "It stops the wave of electricity everywhere except in the AV node (Lecture 1).", 12], ["Which valve separates the right atrium from the right ventricle?", "The tricuspid valve (TV).", "TV = tricuspid valve (Lecture 1).", 13], ["Which valve separates the left atrium from the left ventricle?", "The mitral valve (MV).", "MV = mitral valve (Lecture 1).", 14], ["Which EKG wave is generated as the impulse passes through the atria?", "The P wave.", "The P wave reflects atrial depolarization (Lecture 1).", 15], ["Which EKG complex is generated as the impulse travels through the ventricles?", "The QRS complex.", "The QRS complex reflects spread of the impulse through the ventricles (Lecture 1).", 16], ["What is the PR interval?", "The pause in electrical activity on the EKG while the impulse travels slowly through the AV node.", "It is the pause seen when the impulse crosses the AV node (Lecture 1).", 17], ["Into which two fascicles does the left bundle branch (LBB) split?", "The left anterior fascicle (LAF) and the left posterior fascicle (LPF).", "The LBB itself splits into LAF and LPF (Lecture 1).", 18], ["Which cells produce non-nodal (\"fast response\") action potentials?", "Atrial and ventricular myocytes and the fast-conducting Purkinje system in the ventricles.", "These are the non-nodal tissues (Lecture 2).", 19], ["Which cells produce nodal (\"slow response\") action potentials?", "The cells of the sinoatrial (SA) node and the atrioventricular (AV) node.", "Nodal = slow response (Lecture 2).", 20], ["What is phase 4 of a non-nodal action potential?", "The resting potential (a true resting potential).", "Phase 4 = resting potential: ↑ K+ and ↓ Na+ and ↓ Ca++ conductance (Lecture 2).", 21], ["What happens in phase 0 of a non-nodal action potential, and which conductances change?", "Rapid depolarization, with ↑ Na+ and ↓ K+ conductance.", "Phase 0 is the fast depolarization phase (Lecture 2).", 22], ["What is phase 2 of a non-nodal action potential, and which conductance rises?", "The plateau phase, with ↑ Ca++ conductance.", "The prolonged plateau is a hallmark of fast response potentials (Lecture 2).", 23], ["What property do nodal action potentials display, and what does it cause?", "Automaticity (pacemaker activity), which causes spontaneous depolarization.", "Nodal cells depolarize spontaneously (Lecture 2).", 24], ["Which phases are absent from nodal action potentials?", "Phase 1 and phase 2.", "Nodal action potentials have no phase 1 or phase 2 (Lecture 2).", 25]], [["In which two ways does the cardiac electrical signal control the heartbeat?", "1) Each impulse generates one heartbeat, so the number of impulses determines the heart rate.\n2) It controls conduction as it spreads across the heart, making the muscle cells contract in the correct sequence for regular, efficient, coordinated beats.", "Rate and sequence are both set by the signal (Lecture 1).", 26], ["Why is it important that the impulse is slowed at the AV node?", "The pause allows the atria to contract fully and empty their blood into the ventricles before the ventricles begin to contract.", "The slow, controlled passage creates the PR pause (Lecture 1).", 27], ["Why does the electrical signal have to pass through the AV node to reach the ventricles?", "The AV disc (fibrous tissue between atria and ventricles) stops the wave of electricity everywhere except in the AV node.", "The AV node is the only route across the AV disc (Lecture 1).", 28], ["Trace the path of the electrical impulse from its origin to the ventricles.", "Sinus node → right and left atria → AV node → bundle of His → right and left bundle branches → right and left ventricles.", "The AV conduction system = AV node, His bundle, RBB and LBB (Lecture 1).", 29], ["Where does each ventricle send blood?", "The left ventricle sends blood to the organs of the body; the right ventricle sends blood to the lungs.", "Ventricular contraction drives the circulation (Lecture 1).", 30], ["What does atrial depolarization do?", "The impulse spreads across both atria, causing them to contract and push blood into the right and left ventricles.", "Atrial depolarization produces the P wave (Lecture 1).", 31], ["Compare phase 1 and phase 3 of the non-nodal action potential.", "Phase 1: initial repolarization (↓ Na+, ↑ K+ conductance).\nPhase 3: repolarization (↑ K+, ↓ Ca++ conductance).", "Both are repolarizing phases but with different ion changes (Lecture 2).", 32], ["What features distinguish non-nodal (fast response) from nodal (slow response) action potentials?", "Non-nodal: true resting potential (phase 4), fast depolarization (phase 0), prolonged plateau (phase 2).\nNodal: automaticity with spontaneous depolarization, less rapid depolarization, shorter duration, and no phase 1 or 2.", "Contrast of the two types (Lecture 2).", 33], ["Why do changes in membrane conductance alter the membrane potential?", "Action potentials are determined by the movement of different ions (ion currents) into and out of the cell, so changes in conductance to these ions change the membrane potential.", "Ion currents shape the action potential (Lecture 2).", 34], ["How do sodium-channel blockers act in non-nodal tissue?", "They decrease the fast inward movement of Na+, which lowers the slope of phase 0 and the magnitude of depolarization, reducing conduction velocity. They also increase the effective refractory period (ERP) by delaying reactivation of fast-sodium channels.", "Antiarrhythmic effect on fast response tissue (Lecture 2).", 35], ["How do potassium-channel blockers act in non-nodal tissue?", "They delay the onset and prolong phase 3 repolarization, which lengthens the action potential duration and the ERP.", "They act on repolarization (Lecture 2).", 36], ["What produces spontaneous depolarization in phase 4 of a nodal action potential?", "\"Funny\" currents (If) through slow inward Na+ channels, together with ↑ Ca++ and ↓ K+ conductance.", "This is the basis of pacemaker activity (Lecture 2).", 37], ["Compare the ion changes in phase 0 of non-nodal and nodal action potentials.", "Non-nodal phase 0: ↑ Na+ and ↓ K+ conductance.\nNodal phase 0: ↑ Ca++ and ↓ K+ conductance.", "Ca++ replaces Na+ as the rising conductance in nodal cells (Lecture 2).", 38], ["What is the effect of calcium-channel blockers on phase 4 of the nodal action potential?", "They reduce the slope of phase 4, decreasing the rate of spontaneous depolarization and so reducing the rate of pacemaker firing.", "Calcium-channel blockers slow pacemaker firing (Lecture 2).", 39], ["How do calcium-channel blockers affect the AV node?", "They decrease the slope of phase 0, which slows conduction velocity within the AV node, and they lengthen the AV nodal ERP.", "Effect on the slow response phase 0 (Lecture 2).", 40]], [["Explain how the AV disc and the AV node together ensure the atria empty before the ventricles contract.", "The AV disc stops the electrical wave everywhere except at the AV node. The impulse crosses the AV node slowly, producing the PR-interval pause, which lets the atria contract fully and empty their blood into the ventricles before ventricular contraction begins.", "Combines AV disc, AV node and PR interval (Lecture 1).", 41], ["Compare sodium-channel blockers (non-nodal tissue) with calcium-channel blockers (nodal tissue): which phases are affected and what are the results?", "Sodium-channel blockers: ↓ slope of phase 0 and magnitude of depolarization → ↓ conduction velocity and ↑ ERP.\nCalcium-channel blockers: ↓ slope of phase 4 (↓ pacemaker firing rate) and ↓ slope of phase 0 (slower AV nodal conduction), plus ↑ AV nodal ERP.", "Each class acts on the ion that drives the relevant phase (Lecture 2).", 42], ["Which ion's channels must be blocked to reduce the slope of phase 0 in a ventricular myocyte versus an AV node cell?", "Ventricular myocyte (non-nodal): Na+ channels, because phase 0 is driven by ↑ Na+ conductance.\nAV node cell (nodal): Ca++ channels, because phase 0 is driven by ↑ Ca++ conductance.", "Phase 0 depends on different ions in the two cell types (Lecture 2).", 43], ["Which drug action is shared by both nodal and non-nodal tissue, and what is its effect?", "Potassium-channel blockers delay phase 3 repolarization in both, which lengthens the action potential duration and the ERP.", "Stated for both non-nodal and nodal tissue (Lecture 2).", 44], ["Describe how the impulse reaches the two ventricles after the AV node, and what the EKG and the circulation show as a result.", "The AV node conducts the impulse to the His bundle, which passes it to the RBB and LBB (the LBB splits into LAF and LPF). These send it to the right and left ventricles, producing the QRS complex; the ventricles contract, the left sending blood to the body and the right to the lungs.", "Integrates the ventricular conduction system, QRS and outflow (Lecture 1).", 45], ["How does phase 4 differ between non-nodal and nodal cells, and why does this give nodal cells automaticity?", "Non-nodal: a true resting potential (↑ K+, ↓ Na+, ↓ Ca++ conductance).\nNodal: spontaneous depolarization via \"funny\" currents (If) through slow inward Na+ channels with ↑ Ca++ and ↓ K+ conductance, so the cell depolarizes by itself.", "Spontaneous phase 4 depolarization = pacemaker activity (Lecture 2).", 46], ["Describe the pattern of Ca++ and K+ conductance across phases 0, 3 and 4 of the nodal action potential.", "Phase 0: ↑ Ca++, ↓ K+.\nPhase 3: ↑ K+, ↓ Ca++.\nPhase 4: ↑ Ca++, ↓ K+ (plus If currents).", "Nodal potentials have only phases 0, 3 and 4 (Lecture 2).", 47], ["Both the SA node and the AV node produce slow response action potentials. How do their roles in the heartbeat differ?", "SA node: the natural pacemaker, generating impulses at 60–100 per minute that set the heart rate.\nAV node: slows the impulse for a short period (the PR pause) so the atria can empty before the ventricles contract.", "Same potential type, different functions (Lecture 1 and Lecture 2).", 48], ["Both sodium- and potassium-channel blockers raise the ERP in non-nodal tissue. How do their mechanisms differ?", "Sodium-channel blockers delay the reactivation of fast-sodium channels. Potassium-channel blockers delay the onset and prolong phase 3 repolarization, lengthening the action potential duration.", "Same outcome (↑ ERP), different mechanisms (Lecture 2).", 49], ["The sinus node's impulse count determines the heart rate. Using the lectures, what would reducing the slope of phase 4 in its cells do to the heart rate?", "It would lower the rate of spontaneous depolarization and thus the rate of pacemaker firing, so fewer impulses are generated and the heart rate falls. Calcium-channel blockers act this way.", "Links 'impulses set the rate' (Lecture 1) to 'phase 4 slope sets firing rate' (Lecture 2).", 50]]];
+// MCQ bank: [question, [A,B,C,D], correct index, explanation]
+const Q=[[["The heart's pumping action is regulated by:", ["The fibrous AV disc alone", "An electrical conduction system", "The mitral and tricuspid valves", "The respiratory system"], 1, "An electrical conduction system coordinates the contraction of the heart's chambers."], ["Another name for the sinus node is the:", ["Atrioventricular (AV) node", "Bundle of His", "Purkinje system", "Sinoatrial (SA) node"], 3, "The sinus node is also called the sinoatrial node, or SA node."], ["The sinus node is located in the:", ["Upper portion of the left atrium", "Upper portion of the right atrium", "Right ventricle", "AV disc"], 1, "It is a small mass of specialized tissue in the upper right atrium."], ["Under normal conditions the sinus node generates impulses at a rate of:", ["30 to 50 per minute", "100 to 150 per minute", "60 to 100 per minute", "150 to 200 per minute"], 2, "The normal sinus rate is 60 to 100 beats per minute."], ["Which structure is often called the heart's \"natural pacemaker\"?", ["The AV node", "The bundle of His", "The left bundle branch", "The sinus node"], 3, "The sinus node produces the heart's own electrical signal and sets the rate."], ["Which chambers are stimulated first?", ["The atria", "The ventricles", "Both ventricles together with the atria", "The right ventricle only"], 0, "The atria are stimulated and contract shortly before the ventricles."], ["Where is the electrical impulse slowed for a very short period?", ["At the sinus node", "In the bundle branches", "In the right atrium wall", "At the AV node"], 3, "At the AV node the impulses are slowed down briefly."], ["After the AV node, the impulse continues into the ventricles via the:", ["Bundle of His", "Sinus node", "AV disc", "Tricuspid valve"], 0, "The impulse passes from the AV node down the bundle of His."], ["The bundle of His divides into:", ["Right and left atria", "Right and left bundle branches", "The sinus and AV nodes", "The tricuspid and mitral valves"], 1, "The branches stimulate the right and left ventricles."], ["Each contraction of the ventricles represents:", ["One P wave", "One PR interval", "One heartbeat", "One sinus node depolarization only"], 2, "Each ventricular contraction is one heartbeat."], ["The AV disc is:", ["A bundle of nerve fibers in the right atrium", "The valve between left atrium and left ventricle", "A branch of the bundle of His", "A layer of fibrous tissue separating the atria and ventricles"], 3, "It keeps the electrical signal passing through the AV node."], ["The tricuspid valve separates the:", ["Right atrium from the right ventricle", "Left atrium from the left ventricle", "Right atrium from the left atrium", "Right ventricle from the left ventricle"], 0, "TV = valve between RA and RV."], ["The mitral valve separates the:", ["Right atrium from the right ventricle", "Left atrium from the right atrium", "Left atrium from the left ventricle", "Left ventricle from the right ventricle"], 2, "MV = valve between LA and LV."], ["The P wave on the EKG is generated as the impulse passes through the:", ["Atria", "Ventricles", "Bundle branches", "AV disc"], 0, "Atrial depolarization produces the P wave."], ["The QRS complex on the EKG is generated as the impulse travels through the:", ["Atria", "Sinus node", "Ventricles", "AV node"], 2, "Ventricular spread of the impulse produces the QRS complex."], ["The PR interval is:", ["The spread of the impulse across the atria", "The pause in electrical activity on the EKG while the impulse crosses the AV node", "The spread of the impulse across the ventricles", "The firing of the sinus node"], 1, "The slow passage through the AV node gives a pause on the EKG."], ["The left bundle branch splits into the:", ["Right and left atrial branches", "Sinus and AV nodal branches", "Tricuspid and mitral fascicles", "Left anterior and left posterior fascicles"], 3, "The LBB splits into the LAF and LPF."], ["Non-nodal (\"fast response\") action potentials are characteristic of:", ["The sinoatrial node", "The AV node", "The SA and AV nodes", "Atrial and ventricular myocytes and the Purkinje system"], 3, "Fast response potentials occur in atrial/ventricular myocytes and Purkinje fibers."], ["Nodal (\"slow response\") action potentials are found in the:", ["Ventricular myocytes", "SA node and AV node", "Purkinje system", "Atrial myocytes"], 1, "Nodal potentials occur in the sinoatrial and AV nodes."], ["Phase 4 of a non-nodal action potential is the:", ["Rapid depolarization", "Plateau phase", "Resting potential", "Initial repolarization"], 2, "Non-nodal cells have a true resting potential (phase 4)."], ["Phase 0 of a non-nodal action potential is:", ["Initial repolarization", "Rapid depolarization", "Plateau", "Resting potential"], 1, "Phase 0 is the fast depolarization phase."], ["The plateau phase of a non-nodal action potential is phase:", ["2", "0", "1", "4"], 0, "Phase 2 is the plateau, with ↑ Ca++ conductance."], ["Which property do nodal action potentials display?", ["Automaticity (pacemaker activity)", "A true resting potential", "A prolonged plateau phase", "A distinct phase 1"], 0, "Nodal cells depolarize spontaneously."], ["Which phases are absent in nodal action potentials?", ["Phase 1 and phase 2", "Phase 0 and phase 4", "Phase 3 and phase 4", "Phase 0 and phase 3"], 0, "Nodal action potentials have no phase 1 or phase 2."], ["Which phase of the non-nodal action potential is the initial repolarization?", ["Phase 0", "Phase 2", "Phase 1", "Phase 4"], 2, "Phase 1: initial repolarization (↓ Na+, ↑ K+ conductance)."]], [["What does the pause at the AV node allow?", ["The ventricles to contract before the atria", "The atria to contract fully and empty into the ventricles before the ventricles contract", "The sinus node to recharge", "The AV disc to conduct the impulse directly"], 1, "The slow, controlled passage through the AV node creates this pause."], ["What happens when the electrical wave reaches the AV disc?", ["It passes freely into the ventricles", "It is speeded up", "It is stopped, except in the AV node", "It is reflected back to the sinus node"], 2, "The AV disc blocks conduction apart from the AV node."], ["Which sequence correctly lists the conduction pathway?", ["Sinus node → AV node → atria → bundle branches → bundle of His → ventricles", "AV node → sinus node → bundle of His → atria → ventricles", "Sinus node → atria → AV node → bundle of His → bundle branches → ventricles", "Bundle of His → AV node → sinus node → bundle branches → ventricles"], 2, "This is the order described in Lecture 1."], ["Which statement about ventricular output is correct?", ["The left ventricle sends blood to the body and the right ventricle sends blood to the lungs", "The right ventricle sends blood to the body and the left to the lungs", "Both ventricles send blood only to the lungs", "Both ventricles send blood only to the body"], 0, "Ventricular contraction sends blood to the organs (LV) and lungs (RV)."], ["What results from atrial depolarization?", ["Both atria contract, pushing blood into the ventricles", "Both ventricles contract and eject blood", "The AV disc relaxes", "The sinus node stops firing"], 0, "Atrial depolarization pushes blood into the right and left ventricles."], ["Which pairing of EKG feature and event is correct?", ["P wave – impulse spreading across the ventricles", "QRS complex – impulse spreading across the atria", "PR interval – impulse spreading across the ventricles", "QRS complex – impulse spreading across the ventricles"], 3, "P = atria, PR = AV node pause, QRS = ventricles."], ["Besides setting the heart rate, the sinus node signal also:", ["Closes the heart valves", "Makes heart muscle cells contract in the correct sequence", "Produces the QRS complex directly", "Replaces the AV node"], 1, "It controls conduction as it spreads, ensuring coordinated beats."], ["Which feature is characteristic of non-nodal but not nodal action potentials?", ["A prolonged plateau phase (phase 2)", "Spontaneous depolarization", "Pacemaker activity", "Slow response"], 0, "Nodal potentials have no phase 2."], ["What is the effect of sodium-channel blockers on phase 0 in non-nodal tissue?", ["Increased slope and faster conduction", "No change in slope", "Decreased slope and reduced conduction velocity", "Loss of phase 4"], 2, "They decrease the fast inward Na+ movement, lowering phase 0 slope."], ["Which conductance changes occur in phase 3 (repolarization) of the non-nodal action potential?", ["↑ Na+ and ↓ K+", "↑ Ca++ and ↓ K+", "↑ Na+ and ↓ Ca++", "↑ K+ and ↓ Ca++"], 3, "Phase 3: ↑ K+ and ↓ Ca++ conductance."], ["What causes spontaneous depolarization in phase 4 of nodal cells?", ["\"Funny\" currents (If) through slow inward Na+ channels", "Fast inward Na+ channels only", "A true resting potential", "The plateau phase"], 0, "Phase 4 nodal depolarization involves If currents."], ["What is the effect of calcium-channel blockers on phase 4 of nodal cells?", ["They increase its slope", "They reduce its slope, reducing the pacemaker firing rate", "They remove phase 0", "They create a plateau"], 1, "A lower phase 4 slope reduces the rate of spontaneous depolarization."], ["Which statement correctly compares phase 0 in the two cell types?", ["Non-nodal: ↑ Ca++ conductance; nodal: ↑ Na+ conductance", "Non-nodal: ↑ Na+ conductance; nodal: ↑ Ca++ conductance", "Both: ↑ Na+ conductance", "Both: ↑ K+ conductance"], 1, "Phase 0 depends on Na+ in non-nodal and Ca++ in nodal cells."], ["What do potassium-channel blockers do in non-nodal tissue?", ["Shorten phase 3", "Increase the slope of phase 0", "Delay and prolong phase 3, lengthening action potential duration and ERP", "Abolish the resting potential"], 2, "They delay the onset and prolong phase 3 repolarization."], ["How do sodium-channel blockers increase the ERP?", ["By opening potassium channels", "By shortening phase 2", "By speeding the AV node", "By delaying reactivation of fast-sodium channels"], 3, "Delayed reactivation of fast-sodium channels raises the ERP."]], [["A drug delays phase 3 repolarization in SA node cells. What is expected?", ["A shorter action potential duration", "Loss of spontaneous depolarization in phase 4", "An increased slope of phase 0", "A longer action potential duration and ERP"], 3, "Potassium-channel blockers delay phase 3 and lengthen duration and ERP in nodal tissue."], ["A drug slows conduction velocity within the AV node by decreasing the slope of phase 0. Which channels does it most likely block?", ["Fast sodium channels", "Calcium channels", "Potassium channels", "Channels of the bundle of His"], 1, "AV nodal phase 0 depends on Ca++; calcium-channel blockers slow conduction there."], ["Which sequence explains why the atria empty before the ventricles contract?", ["P wave → slow passage through the AV node (PR pause) → QRS complex", "QRS complex → PR pause → P wave", "P wave → QRS complex → PR pause", "PR pause → QRS complex → P wave"], 0, "Atria depolarize, the AV node pauses the impulse, then ventricles depolarize."], ["Which effect is shared by sodium-channel blockers in non-nodal tissue and calcium-channel blockers in the AV node?", ["A decreased phase 4 slope", "An increased conduction velocity", "A shortened action potential duration", "A decreased phase 0 slope and a lengthened ERP"], 3, "Both reduce phase 0 slope (slower conduction) and increase the ERP."], ["A cell has no phase 1 or 2 and depolarizes spontaneously via funny currents. Which cell is it?", ["A ventricular myocyte", "A Purkinje fiber", "A sinoatrial or AV node cell", "An atrial myocyte"], 2, "These are features of nodal (slow response) potentials."], ["Which change would directly lower the number of impulses generated by the sinus node?", ["Reducing the slope of phase 0 in ventricular myocytes", "Reducing the slope of phase 4", "Lengthening the plateau in atrial myocytes", "Delaying reactivation of fast-sodium channels in Purkinje fibers"], 1, "Each impulse is one heartbeat; a lower phase 4 slope reduces pacemaker firing."], ["In a non-nodal action potential, which phases involve ↓ Na+ conductance?", ["Phases 1 and 4", "Phases 0 and 4", "Phases 2 and 3", "Phases 0 and 1"], 0, "Phase 1 and phase 4 list ↓ Na+; phase 0 is ↑ Na+."], ["Which sequence lists the structures between the AV node and the left ventricle?", ["Left bundle branch → bundle of His → right bundle branch → left ventricle", "Bundle of His → left bundle branch → left anterior/posterior fascicles → left ventricle", "Bundle of His → right bundle branch → left ventricle", "Left anterior fascicle → AV node → left ventricle"], 1, "The His bundle passes the signal to the LBB, which splits into LAF and LPF."], ["Which statement about sodium- and potassium-channel blockers in non-nodal tissue is correct?", ["Sodium blockers lower the phase 0 slope; potassium blockers prolong phase 3", "Sodium blockers prolong phase 3; potassium blockers lower the phase 0 slope", "Both lower the phase 0 slope only", "Both shorten the action potential"], 0, "Na+ blockers affect phase 0 and conduction velocity; K+ blockers affect phase 3."], ["Which drug classes lengthen the AV nodal ERP?", ["Sodium-channel blockers only", "Sodium- and calcium-channel blockers", "Calcium-channel blockers and potassium-channel blockers", "Sodium- and potassium-channel blockers"], 2, "Lecture 2 states both calcium- and potassium-channel blockers lengthen it."]]];
+function lvBuild(el,data,cb){const w=$(el);w.innerHTML="";LV.forEach((l,i)=>{const b=E("button","lvb"+(i==0?" on":""),"<b>"+l[0]+"</b><span>"+l[1]+" · "+data[i].length+"</span>");b.onclick=()=>{w.querySelectorAll(".lvb").forEach(x=>x.classList.remove("on"));b.classList.add("on");cb(i)};w.append(b)})}
+// flash cards
+let fd=F[0].slice(),fi=0,fL=0;
+function fr(){const c=fd[fi];$("#fc").classList.remove("f");$("#fq").textContent=c[0];const b=$("#fans");b.innerHTML="";const k=(t,x,cl)=>{b.append(E("div","tg",t));const d=E("div",cl,"");d.textContent=x;b.append(d)};k("Back",c[1],"bt");k("Explanation",c[2],"bt ex");$("#fn").textContent=LV[fL][0]+" · "+LV[fL][1]+" · Card "+String(c[3]).padStart(2,"0")+" ("+(fi+1)+" of "+fd.length+")"}
+const fl=()=>$("#fc").classList.toggle("f");
+$("#fc").onclick=fl;$("#ff").onclick=fl;$("#fc").onkeydown=e=>{if(e.key=="Enter"||e.key==" "){e.preventDefault();fl()}};
+$("#fx").onclick=()=>{fi=(fi+1)%fd.length;fr()};$("#fp").onclick=()=>{fi=(fi-1+fd.length)%fd.length;fr()};$("#fs").onclick=()=>{fd=sh(fd);fi=0;fr()};
+lvBuild("#fl",F,i=>{fL=i;fd=F[i].slice();fi=0;fr()});fr();
+// quiz
+let qi,qs,qo,qL=0;
+function qstart(){qo=sh(Q[qL]);qi=0;qs=0;qshow()}
+function qshow(){const z=$("#qz");z.innerHTML="";if(qi>=qo.length){z.innerHTML="<div class='card'><h3>"+LV[qL][0]+" score: "+qs+" / "+qo.length+"</h3><p>"+Math.round(qs/qo.length*100)+"% correct.</p></div>";const b=E("button","btn","Try again");b.onclick=qstart;z.append(b);return}
+const [q,opts,ci,ex]=qo[qi];z.append(E("div","prog","<i style='width:"+qi/qo.length*100+"%'></i>"));
+const card=E("div","card","<small>"+LV[qL][0]+" · Difficulty: "+LV[qL][1]+" · Question "+(qi+1)+" of "+qo.length+" · Score "+qs+"</small>");
+card.append(E("h3","",""));card.lastChild.textContent=q;
+const nx=E("button","btn",qi==qo.length-1?"See score":"Next question");nx.style.display="none";nx.onclick=()=>{qi++;qshow()};
+const bs=[];opts.forEach((o,i)=>{const b=E("button","opt","");b.textContent=o;bs.push(b);b.onclick=()=>{if(card.dataset.d)return;card.dataset.d=1;if(i==ci){qs++;b.classList.add("ok")}else{b.classList.add("no");bs[ci].classList.add("ok")}
+const n=E("div","note","");n.innerHTML="<b>Correct answer: "+"ABCD"[ci]+") </b>";n.append(document.createTextNode(opts[ci]));n.append(E("br"));n.append(document.createTextNode("Explanation: "+ex));card.insertBefore(n,nx);nx.style.display="inline-block"};card.append(b)});
+card.append(nx);z.append(card)}
+lvBuild("#ql",Q,i=>{qL=i;qstart()});qstart();
+</script></body></html>
